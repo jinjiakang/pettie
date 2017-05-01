@@ -8,7 +8,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
      <!--The first child in the layout is for the main Activity UI-->
     <RelativeLayout
     android:layout_width="match_parent"
@@ -16,22 +15,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
     android:background="#ffffffff">
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:text="Holy Operating Systems, Batdroid!"-->
-    <!--android:textSize="24sp"-->
-    <!--android:gravity="center"-->
-    <!--android:layout_marginTop="100dp"/>-->
-
-    <!--<ImageView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:src="@drawable/batdroid"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:layout_centerHorizontal="true"/>-->
 
         <FrameLayout
             android:id="@+id/contentContainer"
@@ -44,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent"
             app:bb_tabXmlResource="@xml/bottombar_tabs" />
 
     </RelativeLayout>
