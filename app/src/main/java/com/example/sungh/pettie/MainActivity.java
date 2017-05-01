@@ -1,25 +1,29 @@
 package com.example.sungh.pettie;
 
-import android.support.annotation.IdRes;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
+import android.support.annotation.IdRes;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.SearchView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +45,17 @@ public class MainActivity extends AppCompatActivity {
         addDrawerItems();
         setupDrawer();
 
+        ArrayList<String> myDataset = new ArrayList<>();
+        for(int i = 0; i < 100; i++){
+            myDataset.add(i + "");
+        }
+        MyAdapter myAdapter = new MyAdapter(myDataset);
+        RecyclerView mList = (RecyclerView) findViewById(R.id.list_view);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mList.setLayoutManager(layoutManager);
+        mList.setAdapter(myAdapter);
+
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -52,6 +67,43 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
+
+    public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+        private List<String> mData;
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public TextView mTextView;
+            public ViewHolder(View v) {
+                super(v);
+                mTextView = (TextView) v.findViewById(R.id.info_text);
+            }
+        }
+
+        public MyAdapter(List<String> data) {
+            mData = data;
+        }
+
+        @Override
+        public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item, parent, false);
+            ViewHolder vh = new ViewHolder(v);
+            return vh;
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            holder.mTextView.setText(mData.get(position));
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return mData.size();
+        }
+    }
+
+
     // 使用array方式存取menu的值
     private void addDrawerItems() {
         String[] osArray = { "收藏", "綜合", "狗", "貓", "其他" };
