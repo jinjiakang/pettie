@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
     <tab
-        id="@+id/tab_recents"
-        title="Recents"
-        icon="@drawable/ic_recents"
+        id="@+id/tab_home"
+        title="Home"
+        icon="@drawable/ic_home_black_24dp"
         barColorWhenSelected="#b77f3a"
         />
     <tab
-        id="@+id/tab_favorites"
-        title="Favorites"
-        icon="@drawable/ic_favorites"
+        id="@+id/tab_new"
+        title="News"
+        icon="@drawable/ic_fiber_new_black_24dp"
         barColorWhenSelected="#b77f3a"
         />
     <tab
-        id="@+id/tab_nearby"
+        id="@+id/tab_add"
+        title="Add"
+        icon="@drawable/ic_add_black_24dp"
+        barColorWhenSelected="#b77f3a"
+        />
+    <tab
+        id="@+id/tab_notifications"
+        title="Message"
+        icon="@drawable/ic_notifications_black_24dp"
+        barColorWhenSelected="#b77f3a"
+        />
+    <tab
+        id="@+id/tab_location_on"
         title="Nearby"
-        icon="@drawable/ic_nearby"
-        barColorWhenSelected="#b77f3a"
-        />
-    <tab
-        id="@+id/tab_friends"
-        title="Friends"
-        icon="@drawable/ic_friends"
-        barColorWhenSelected="#b77f3a"
-        />
-    <tab
-        id="@+id/tab_restaurants"
-        title="Restaurants"
-        icon="@drawable/ic_restaurants"
+        icon="@drawable/ic_location_on_black_24dp"
         barColorWhenSelected="#b77f3a"
         />
 </tabs>
