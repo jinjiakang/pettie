@@ -4,30 +4,35 @@
         id="@+id/tab_home"
         title="Home"
         icon="@drawable/ic_home_black_24dp"
-        barColorWhenSelected="#b77f3a"
+        inActiveColor="#000000"
+        activeColor="#fffffc"
         />
     <tab
         id="@+id/tab_new"
         title="News"
         icon="@drawable/ic_fiber_new_black_24dp"
-        barColorWhenSelected="#b77f3a"
+        inActiveColor="#000000"
+        activeColor="#fffffc"
         />
     <tab
         id="@+id/tab_add"
         title="Add"
         icon="@drawable/ic_add_black_24dp"
-        barColorWhenSelected="#b77f3a"
+        inActiveColor="#000000"
+        activeColor="#fffffc"
         />
     <tab
         id="@+id/tab_notifications"
         title="Message"
         icon="@drawable/ic_notifications_black_24dp"
-        barColorWhenSelected="#b77f3a"
+        inActiveColor="#000000"
+        activeColor="#fffffc"
         />
     <tab
         id="@+id/tab_location_on"
         title="Nearby"
         icon="@drawable/ic_location_on_black_24dp"
-        barColorWhenSelected="#b77f3a"
+        inActiveColor="#000000"
+        activeColor="#fffffc"
         />
 </tabs>

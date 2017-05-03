@@ -18,7 +18,7 @@
         <!-- title text color -->
         <item name="android:textColorPrimary">#ffffff</item>
         <!-- subtitle text color -->
-        <item name="android:textColorSecondary">#000000</item>
+        <item name="android:textColorSecondary">#ffffff</item>
         <!-- action menu item text color -->
         <item name="actionMenuTextColor">#ffffff</item>
         <!-- action menu item icon color -->
