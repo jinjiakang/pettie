@@ -2,11 +2,13 @@ package com.example.sungh.pettie;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,10 +21,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -44,25 +42,58 @@ public class MainActivity extends AppCompatActivity {
 
         addDrawerItems();
         setupDrawer();
+        //  假裝測試
+//        ArrayList<String> myDataset = new ArrayList<>();
+//        for(int i = 0; i < 100; i++){
+//            myDataset.add(i + "");
+//        }
+//
+//        MyAdapter myAdapter = new MyAdapter(myDataset);
+//        RecyclerView mList = (RecyclerView) findViewById(R.id.list_view);
+//        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        mList.setLayoutManager(layoutManager);
+//        mList.setAdapter(myAdapter);
+        // 做切換layout 使用 navigation
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener
 
-        ArrayList<String> myDataset = new ArrayList<>();
-        for(int i = 0; i < 100; i++){
-            myDataset.add(i + "");
-        }
-        MyAdapter myAdapter = new MyAdapter(myDataset);
-        RecyclerView mList = (RecyclerView) findViewById(R.id.list_view);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mList.setLayoutManager(layoutManager);
-        mList.setAdapter(myAdapter);
-        //BottomBar
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelected(@IdRes int tabId) {
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.action_item1:
+                                selectedFragment = ItemOneFragment.newInstance();
+                                break;
+                            case R.id.action_item2:
+                                selectedFragment = ItemTwoFragment.newInstance();
+                                break;
+                            case R.id.action_item3:
+                                selectedFragment = ItemThreeFragment.newInstance();
+                                break;
+                            case R.id.action_item4:
+                                selectedFragment = ItemFourFragment.newInstance();
+                                break;
+                            case R.id.action_item5:
+                                selectedFragment = ItemFiveFragment.newInstance();
+                                break;
+                        }
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
 
-            }
-        });
+        // 預設 navigation view ItemOneFragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, ItemOneFragment.newInstance());
+        transaction.commit();
+        //  實作 BottomNavigationViewHelper 新增helper (BottomNavigationViewHelper) 使它不會因為超過三個改變它的大小
+        BottomNavigationView bottomNavigationFixViews = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

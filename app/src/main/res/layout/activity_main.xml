@@ -8,38 +8,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-     <!--The first child in the layout is for the main Activity UI-->
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity"
-    android:background="#ffffffff">
+        android:id="@+id/activity_main"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.truiton.bottomnavigation.MainActivity">
 
         <FrameLayout
-            android:id="@+id/contentContainer"
+            android:id="@+id/frame_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/bottomBar">
-
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/list_post"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-            />
+            android:layout_above="@+id/navigation"
+            android:animateLayoutChanges="true">
+            <!--<include-->
+            <!--android:id="@+id/toolbar"-->
+            <!--layout="@layout/list_post"-->
+            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
 
         </FrameLayout>
 
-
-        <com.roughike.bottombar.BottomBar
-            android:id="@+id/bottomBar"
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/colorPrimary"
-            app:bb_tabXmlResource="@xml/bottombar_tabs" />
-
+            app:itemIconTint="@color/colorWhite"
+            app:itemTextColor="@color/colorWhite"
+            app:menu="@menu/bottom_navigation_items"
+            />
     </RelativeLayout>
+
+     <!--The first child in the layout is for the main Activity UI-->
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+    <!--tools:context=".MainActivity"-->
+    <!--android:background="#ffffffff">-->
+
+        <!--<FrameLayout-->
+            <!--android:id="@+id/contentContainer"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_above="@+id/bottomBar">-->
+
+            <!--<include-->
+                <!--android:id="@+id/toolbar"-->
+                <!--layout="@layout/list_post"-->
+                <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
+
+        <!--</FrameLayout>-->
+
+
+        <!--<com.roughike.bottombar.BottomBar-->
+            <!--android:id="@+id/bottomBar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:background="@color/colorPrimary"-->
+            <!--app:bb_tabXmlResource="@xml/bottombar_tabs" />-->
+
+    <!--</RelativeLayout>-->
 
     <!-- Side navigation drawer UI -->
     <ListView
