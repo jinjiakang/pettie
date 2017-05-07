@@ -42,39 +42,6 @@
             />
     </RelativeLayout>
 
-     <!--The first child in the layout is for the main Activity UI-->
-    <!--<RelativeLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
-    <!--tools:context=".MainActivity"-->
-    <!--android:background="#ffffffff">-->
-
-        <!--<FrameLayout-->
-            <!--android:id="@+id/contentContainer"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_above="@+id/bottomBar">-->
-
-            <!--<include-->
-                <!--android:id="@+id/toolbar"-->
-                <!--layout="@layout/list_post"-->
-                <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
-
-        <!--</FrameLayout>-->
-
-
-        <!--<com.roughike.bottombar.BottomBar-->
-            <!--android:id="@+id/bottomBar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="60dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:background="@color/colorPrimary"-->
-            <!--app:bb_tabXmlResource="@xml/bottombar_tabs" />-->
-
-    <!--</RelativeLayout>-->
-
-    <!-- Side navigation drawer UI -->
     <ListView
         android:id="@+id/navList"
         android:layout_width="200dp"

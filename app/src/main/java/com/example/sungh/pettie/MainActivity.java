@@ -9,19 +9,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,18 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         addDrawerItems();
         setupDrawer();
-        //  假裝測試
-//        ArrayList<String> myDataset = new ArrayList<>();
-//        for(int i = 0; i < 100; i++){
-//            myDataset.add(i + "");
-//        }
-//
-//        MyAdapter myAdapter = new MyAdapter(myDataset);
-//        RecyclerView mList = (RecyclerView) findViewById(R.id.list_view);
-//        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        mList.setLayoutManager(layoutManager);
-//        mList.setAdapter(myAdapter);
+
         // 做切換layout 使用 navigation
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -99,42 +82,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
-    public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-        private List<String> mData;
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public TextView mTextView;
-            public ViewHolder(View v) {
-                super(v);
-                mTextView = (TextView) v.findViewById(R.id.info_text);
-            }
-        }
-
-        public MyAdapter(List<String> data) {
-            mData = data;
-        }
-
-        @Override
-        public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item, parent, false);
-            ViewHolder vh = new ViewHolder(v);
-            return vh;
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.mTextView.setText(mData.get(position));
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return mData.size();
-        }
-    }
-
-
     // 使用array方式存取menu的值
     private void addDrawerItems() {
         String[] osArray = { "收藏", "綜合", "狗", "貓", "其他" };
@@ -148,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     //使用拖拉的部分
     private void setupDrawer() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
@@ -193,15 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
 
         // 判斷menu 左邊開啟
         if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -210,22 +149,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        MenuItem searchItem = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-//        // Configure the search info and add any event listeners
-//
-//        return super.onCreateOptionsMenu(menu);
-//    }
+
 }
 
-//public class MainActivity extends AppCompatActivity {
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//    }
-//}
