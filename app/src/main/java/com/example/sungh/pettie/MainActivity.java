@@ -48,19 +48,19 @@ public class MainActivity extends AppCompatActivity {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
                             case R.id.action_item1:
-                                selectedFragment = ItemOneFragment.newInstance();
+                                selectedFragment = HomeFragment.newInstance();
                                 break;
                             case R.id.action_item2:
-                                selectedFragment = ItemTwoFragment.newInstance();
+                                selectedFragment = NewFragment.newInstance();
                                 break;
                             case R.id.action_item3:
-                                selectedFragment = ItemThreeFragment.newInstance();
+                                selectedFragment = AddFragment.newInstance();
                                 break;
                             case R.id.action_item4:
-                                selectedFragment = ItemFourFragment.newInstance();
+                                selectedFragment = MessageFragment.newInstance();
                                 break;
                             case R.id.action_item5:
-                                selectedFragment = ItemFiveFragment.newInstance();
+                                selectedFragment = NearbyFragment.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -70,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        // 預設 navigation view ItemOneFragment
+        // 預設 navigation view fragment_home
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout, ItemOneFragment.newInstance());
+        transaction.replace(R.id.frame_layout, HomeFragment.newInstance());
         transaction.commit();
         //  實作 BottomNavigationViewHelper 新增helper (BottomNavigationViewHelper) 使它不會因為超過三個改變它的大小
         BottomNavigationView bottomNavigationFixViews = (BottomNavigationView) findViewById(R.id.navigation);
