@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
         list_view = (RecyclerView) rootView.findViewById(R.id.list_view); //先做RecyclerView的宣告
 
         ArrayList<String> myDataset = new ArrayList<>();
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < 3; i++){
             myDataset.add(i + "");
         }
 
@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
             public TextView mTextView;
             public ViewHolder(View v) {
                 super(v);
-                mTextView = (TextView) v.findViewById(R.id.text_info);
+                mTextView = (TextView) v.findViewById(R.id.text_Info);
             }
         }
 
