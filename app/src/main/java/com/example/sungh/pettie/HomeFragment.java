@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         list_view = (RecyclerView) rootView.findViewById(R.id.list_view); //先做RecyclerView的宣告
-
+        // 假裝試跑3個cardView
         ArrayList<String> myDataset = new ArrayList<>();
         for(int i = 0; i < 3; i++){
             myDataset.add(i + "");
@@ -77,6 +77,7 @@ public class HomeFragment extends Fragment {
         public int getItemCount() {
             return mData.size();
         }
+
     }
 
 

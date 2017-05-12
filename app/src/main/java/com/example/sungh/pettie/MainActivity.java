@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN); // 點選有鍵盤的呼叫並覆蓋
     }
 
     // 使用array方式存取menu的值
@@ -87,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
         String[] osArray = { "收藏", "綜合", "狗", "貓", "其他" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
-        //可以新增連結
+        // 之後可以做新增連結
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show(); // 暫時先用toast做看看
             }
         });
     }
@@ -119,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    @Override
+    @Override // 將畫面的 menu 呼叫出來圖案會出來
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
@@ -131,22 +133,21 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
+    // 將在menu_main做的item 呼叫出來
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        //
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
+    // 使item 裡menu部分能夠點選將  mDrawerToggle 呼叫出來
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // 判斷menu 左邊開啟
+        //
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
