@@ -138,6 +138,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //
         getMenuInflater().inflate(R.menu.menu_main, menu);
+ 
+//        MenuItem menuSearchItem = menu.findItem(R.id.activity_main);
+//        SearchView searchView = (SearchView) menuSearchItem.getActionView();
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//        searchView.setIconifiedByDefault(true);
+
         return true;
     }
     // 使item 裡menu部分能夠點選將  mDrawerToggle 呼叫出來
@@ -148,8 +155,11 @@ public class MainActivity extends AppCompatActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
 

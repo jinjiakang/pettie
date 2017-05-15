@@ -14,10 +14,12 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
     private RecyclerView list_view;
+
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
