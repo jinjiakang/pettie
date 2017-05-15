@@ -23,77 +23,111 @@ package com.example.sungh.pettie;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-public class NewFragment extends Fragment {
+public class NewFragment extends Fragment implements ViewPager.OnPageChangeListener,
+        TabLayout.OnTabSelectedListener{
     public static NewFragment newInstance() {
         NewFragment fragment = new NewFragment();
         return fragment;
     }
 
-    private android.support.design.widget.TabLayout mTabs;
+//    private android.support.design.widget.TabLayout mTabs;
+//    private ViewPager mViewPager;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
-    private ViewPager mViewPager;
+    private Viewpager viewpager = new Viewpager();
+    private ViewpagerOne viewpagerOne = new ViewpagerOne();
+    private ViewpagerTwo viewpagerTwo = new ViewpagerTwo();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
 
+
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View pagerView =  inflater.inflate(R.layout.fragment_new, container, false);
-        mTabs = (android.support.design.widget.TabLayout) pagerView.findViewById(R.id.tabs);
-        mTabs.addTab(mTabs.newTab().setText("活動"));
-        mTabs.addTab(mTabs.newTab().setText("領養資訊"));
-        mTabs.addTab(mTabs.newTab().setText("寵物資訊"));
-        mViewPager = (ViewPager) pagerView.findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new SamplePagerAdapter());
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs));
-        return pagerView;
-    }
 
-    class SamplePagerAdapter extends PagerAdapter {
+        viewPager = (ViewPager) pagerView.findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) pagerView.findViewById(R.id.tabLayout);
 
-        @Override
-        public int getCount() {
+        //註冊
+        viewPager.addOnPageChangeListener(this);
+        tabLayout.addOnTabSelectedListener(this);
+
+
+        //viewPager 加入 Fragment
+        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
+
+            @Override
+               public Fragment getItem(int position) {
+                    switch (position) {
+                        case 0:
+                            return viewpager;
+                        case 1:
+                            return viewpagerOne;
+                        case 2:
+                            return viewpagerTwo;
+                    }
+                return null;
+            }
+            @Override
+            public int getCount() {
             return 3;
         }
+    }
+    );
+        return pagerView;
 
-        @Override
-        public boolean isViewFromObject(View view, Object o) {
-            return o == view;
-        }
+}
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "Item " + (position + 1);
-        }
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        //TabLayout里的TabItem被选中的时候触发
+        viewPager.setCurrentItem(tab.getPosition());
+    }
 
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            View view = getLayoutInflater(Bundle.EMPTY).inflate(R.layout.viewpager,
-                    container, false);
-            container.addView(view);
-            TextView title = (TextView) view.findViewById(R.id.item_title);
-            title.setText(String.valueOf(position + 1));
-            return view;
-        }
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
 
     }
 
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
 
+    }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        //viewPager滑动之后显示触发
+        tabLayout.getTabAt(position).select();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }
+
+
+
+
+
+
+
+
