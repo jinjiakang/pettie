@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
+    <ImageView
+        android:id="@+id/img_Post"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="fragment2"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_margin="0dp"
+        android:src="@mipmap/ic_test2" />
 
 
 </LinearLayout>

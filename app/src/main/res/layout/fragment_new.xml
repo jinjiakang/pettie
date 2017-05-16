@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"/>
 
         <android.support.design.widget.TabItem
-            android:text="寵物資訊"
+            android:text="寵物知識"
             android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

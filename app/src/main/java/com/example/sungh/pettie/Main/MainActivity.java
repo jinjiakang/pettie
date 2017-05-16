@@ -1,5 +1,6 @@
-package com.example.sungh.pettie;
+package com.example.sungh.pettie.Main;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.sungh.pettie.Add.AddActivity;
+import com.example.sungh.pettie.Home.HomeFragment;
+import com.example.sungh.pettie.Message.MessageFragment;
+import com.example.sungh.pettie.Nearby.NearbyFragment;
+import com.example.sungh.pettie.News.NewsFragment;
+import com.example.sungh.pettie.R;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> mAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +61,12 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = HomeFragment.newInstance();
                                 break;
                             case R.id.action_item2:
-                                selectedFragment = NewFragment.newInstance();
+                                selectedFragment = NewsFragment.newInstance();
                                 break;
                             case R.id.action_item3:
-                                selectedFragment = AddFragment.newInstance();
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this, AddActivity.class);
+                                startActivity(intent);
                                 break;
                             case R.id.action_item4:
                                 selectedFragment = MessageFragment.newInstance();
@@ -64,12 +75,17 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = NearbyFragment.newInstance();
                                 break;
                         }
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_layout, selectedFragment);
-                        transaction.commit();
+                            // 判斷不會是空值
+                        if (selectedFragment != null) {
+                            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.frame_layout, selectedFragment);
+                            transaction.commit();
+                        }
                         return true;
                     }
+
                 });
+
 
         // 預設 navigation view fragment_home
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -151,12 +167,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+
+
     }
 
 

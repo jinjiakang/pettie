@@ -1,4 +1,4 @@
-package com.example.sungh.pettie;
+package com.example.sungh.pettie.News.NewsViewpager;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.sungh.pettie.R;
+
 /**
  * Created by sungh on 2017/5/15.
  */
 
-public class Viewpager extends Fragment {
+public class ActivityViewpager extends Fragment {
 
     @Nullable
     @Override

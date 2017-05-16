@@ -1,4 +1,4 @@
-package com.example.sungh.pettie;
+package com.example.sungh.pettie.Main;
 
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
