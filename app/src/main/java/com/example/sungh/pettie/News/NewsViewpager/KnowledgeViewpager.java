@@ -18,6 +18,6 @@ public class KnowledgeViewpager extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.viewpager_two, container, false);
+        return inflater.inflate(R.layout.viewpager_knowledge, container, false);
     }
 }

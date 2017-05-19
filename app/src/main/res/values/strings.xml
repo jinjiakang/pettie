@@ -9,17 +9,31 @@
 
 
     <string-array name="drawer_menu">
-    <item>Apple</item>
-    <item>Book</item>
-    <item>Cat</item>
-    <item>Dog</item>
-    <item>Eagle</item>
-    <item>Food</item>
-    <item>God</item>
-    <item>House</item>
-    <item>Iron</item>
-    <item>Jingle</item>
-</string-array>
+        <item>Apple</item>
+        <item>Book</item>
+        <item>Cat</item>
+        <item>Dog</item>
+        <item>Eagle</item>
+        <item>Food</item>
+        <item>God</item>
+        <item>House</item>
+        <item>Iron</item>
+        <item>Jingle</item>
+    </string-array>
+    <string name="title_activity_login">登入</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">電子郵件</string>
+    <string name="prompt_password">輸入密碼 </string>
+    <string name="action_sign_in">登入或註冊</string>
+    <string name="action_sign_in_short">註冊</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
 
 </resources>
 

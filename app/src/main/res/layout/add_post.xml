@@ -54,6 +54,7 @@
             android:inputType="textMultiLine"
             android:lines="15"
             android:text="回應..." />
+
     </LinearLayout>
 
 

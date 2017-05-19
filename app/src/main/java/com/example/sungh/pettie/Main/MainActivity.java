@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 //        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    @Override // 將畫面的 menu 呼叫出來圖案會出來
+    @Override // 將畫面的 menu 呼叫出來圖案
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
  
 //        MenuItem menuSearchItem = menu.findItem(R.id.activity_main);
 //        SearchView searchView = (SearchView) menuSearchItem.getActionView();
@@ -170,8 +171,14 @@ public class MainActivity extends AppCompatActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        return super.onOptionsItemSelected(item);
 
+        switch (item.getItemId()) {
+
+            case R.id.profile:
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 

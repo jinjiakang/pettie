@@ -8,7 +8,7 @@
         android:id="@+id/img_Post"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
+        android:layout_gravity="top|center"
         android:layout_margin="0dp"
         android:src="@mipmap/ic_test1" />
 </LinearLayout>

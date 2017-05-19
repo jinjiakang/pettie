@@ -20,15 +20,21 @@
 
 package com.example.sungh.pettie.Add;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.sungh.pettie.Main.MainActivity;
 import com.example.sungh.pettie.R;
 
 public class AddActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_post);
 
@@ -39,5 +45,37 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //顯示
+        getMenuInflater().inflate(R.menu.menu_next, menu);
 
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch (item.getItemId()) {
+
+            case R.id.next:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                Toast.makeText(this, "上傳成功", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }
