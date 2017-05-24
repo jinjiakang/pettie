@@ -28,7 +28,12 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".Main.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login"/>
+        <activity
+            android:name=".Main.PersonalActivity"
+            android:label="訪客頁面"
+
+            />
     </application>
 
 </manifest>

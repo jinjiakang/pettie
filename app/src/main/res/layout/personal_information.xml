@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1"
+        android:paddingTop="10dp"
         android:orientation="vertical"
         android:background="@color/colorPrimary">
 
@@ -54,6 +58,7 @@
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="小咪"
@@ -84,11 +89,11 @@
                     android:id="@+id/textView8"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:paddingTop="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_round_corner"
                     android:padding="10dp"
                     android:text="嗨，我叫做小咪，很高興認識你"
-                    android:textSize="25dp"
                     />
             </LinearLayout>
 
@@ -116,16 +121,7 @@
 
         </FrameLayout>
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
-            app:itemIconTint="@color/colorWhite"
-            app:itemTextColor="@color/colorWhite"
-            app:menu="@menu/bottom_navigation_items"
-            />
+
     </RelativeLayout>
 
 </LinearLayout>

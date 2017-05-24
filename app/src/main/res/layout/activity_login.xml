@@ -72,6 +72,17 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/gust_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:onClick="gust"
+                android:text="訪客登入"
+                android:layout_gravity="center"
+
+                />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
