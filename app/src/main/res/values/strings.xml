@@ -25,7 +25,7 @@
     <!-- Strings related to login -->
     <string name="prompt_email">電子郵件</string>
     <string name="prompt_password">輸入密碼 </string>
-    <string name="action_sign_in">登入或註冊</string>
+    <string name="action_sign_in">登入</string>
     <string name="action_sign_in_short">註冊</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>

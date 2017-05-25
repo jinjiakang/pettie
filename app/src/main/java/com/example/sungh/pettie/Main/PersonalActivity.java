@@ -3,7 +3,6 @@ package com.example.sungh.pettie.Main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
 
 import com.example.sungh.pettie.R;
 
@@ -18,7 +17,7 @@ public class PersonalActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.personal_information);
+        setContentView(R.layout.acvtivity_personal);
 
 
 

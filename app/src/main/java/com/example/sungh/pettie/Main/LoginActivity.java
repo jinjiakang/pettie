@@ -92,14 +92,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
-        // 訪客登入
-        TextView gUstLoin = (TextView) findViewById(R.id.gust_login);
+        // 註冊
+        TextView gUstLoin = (TextView) findViewById(R.id.no_acount);
         gUstLoin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent();
-                intent.setClass(LoginActivity.this, PersonalActivity.class);
+                intent.setClass(LoginActivity.this, NewpersonalActivity.class);
                 startActivity(intent);
 
             }
