@@ -18,7 +18,7 @@
  *
  */
 
-package com.example.sungh.pettie.Nearby;
+package com.example.sungh.pettie.Map;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,9 +28,9 @@ import android.view.ViewGroup;
 
 import com.example.sungh.pettie.R;
 
-public class NearbyFragment extends Fragment {
-    public static NearbyFragment newInstance() {
-        NearbyFragment fragment = new NearbyFragment();
+public class PetmapFragment extends Fragment {
+    public static PetmapFragment newInstance() {
+        PetmapFragment fragment = new PetmapFragment();
         return fragment;
     }
 
@@ -44,4 +44,6 @@ public class NearbyFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_nearby, container, false);
     }
+
+
 }

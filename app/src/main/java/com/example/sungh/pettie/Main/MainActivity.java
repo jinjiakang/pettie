@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.example.sungh.pettie.Add.AddActivity;
 import com.example.sungh.pettie.Home.HomeFragment;
 import com.example.sungh.pettie.Message.MessageFragment;
-import com.example.sungh.pettie.Nearby.NearbyFragment;
+import com.example.sungh.pettie.Map.PetmapFragment;
 import com.example.sungh.pettie.News.NewsFragment;
 import com.example.sungh.pettie.R;
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                                 selectedFragment = MessageFragment.newInstance();
                                 break;
                             case R.id.action_item5:
-                                selectedFragment = NearbyFragment.newInstance();
+                                selectedFragment = PetmapFragment.newInstance();
                                 break;
                         }
                             // 判斷不會是空值
