@@ -13,18 +13,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Home.HomeActivity"
-            android:label="首頁" >
+        <activity
+            android:name=".Home.HomeActivity"
+            android:label="首頁">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Main.MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Add.AddActivity"
             android:screenOrientation="portrait"
@@ -38,7 +38,10 @@
         <activity
             android:name=".Main.NewpersonalActivity"
             android:label="註冊" />
-
+        <activity
+            android:name=".Main.ForumActivity"
+            android:label="論壇"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
