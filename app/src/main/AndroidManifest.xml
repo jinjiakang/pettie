@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Home.HomeActivity"
+            android:name=".Main.MainActivity"
             android:label="首頁">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,9 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Main.MainActivity"
-            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Add.AddActivity"
             android:screenOrientation="portrait"

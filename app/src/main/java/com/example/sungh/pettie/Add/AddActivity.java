@@ -27,7 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.sungh.pettie.Main.MainActivity;
+import com.example.sungh.pettie.Main.ForumActivity;
 import com.example.sungh.pettie.R;
 
 public class AddActivity extends AppCompatActivity {
@@ -59,7 +59,7 @@ public class AddActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.next:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, ForumActivity.class);
                 startActivity(intent);
                 Toast.makeText(this, "上傳成功", Toast.LENGTH_SHORT).show();
         }
