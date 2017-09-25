@@ -8,9 +8,9 @@
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="35pt"
-        android:layout_height="35pt"
-        android:layout_marginTop="5pt">
+        android:layout_width="100pt"
+        android:layout_height="100pt"
+        android:layout_marginTop="10pt">
 
     </ImageView>
 

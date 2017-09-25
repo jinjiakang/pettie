@@ -39,6 +39,9 @@
             android:name=".Main.ForumActivity"
             android:label="論壇"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Main.AdoptionActivity"
+            android:label="領養資訊" />
     </application>
 
 </manifest>

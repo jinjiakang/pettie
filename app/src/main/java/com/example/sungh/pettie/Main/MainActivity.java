@@ -20,12 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
     private int[] image = {
             R.drawable.totoro, R.drawable.totoro, R.drawable.totoro,
-            R.drawable.totoro, R.drawable.totoro, R.drawable.totoro,
-            R.drawable.totoro, R.drawable.totoro, R.drawable.totoro,
+            R.drawable.totoro
     };
     private String[] imgText = {
-            "論壇", "領養資訊", "寵物地圖", "其它", "龍貓4", "龍貓5", "龍貓6",
-            "龍貓7", "龍貓8"
+            "論壇", "領養資訊", "寵物地圖", "其它"
     };
 
     @Override
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 new int[]{R.id.image, R.id.text});
 
         GridView gridView = (GridView)findViewById(R.id.gridview);
-        gridView.setNumColumns(3);
+        gridView.setNumColumns(2);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -58,10 +56,13 @@ public class MainActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         Intent intent = new Intent();
-                        intent.setClass(MainActivity.this  , ForumActivity.class);
+                        intent.setClass(MainActivity.this, ForumActivity.class);
                         startActivity(intent);
                         break;
                     case 1:
+                        Intent adoption_intent = new Intent();
+                        adoption_intent.setClass(MainActivity.this, AdoptionActivity.class);
+                        startActivity(adoption_intent);
                         break;
                     case 2:
                         break;
