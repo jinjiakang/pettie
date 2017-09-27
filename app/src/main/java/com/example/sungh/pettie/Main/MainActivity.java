@@ -3,8 +3,12 @@ package com.example.sungh.pettie.Main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 
@@ -30,10 +34,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        Button HomeFragBtn = (Button)findViewById(R.id.HomeFragBT);
-//        Button AdoptionBtn = (Button)findViewById(R.id.AdoptionBT);
-//        Button PetmapBtn = (Button)findViewById(R.id.PetmapBT);
 
         // 設定gridview
         List<Map<String, Object>> items = new ArrayList<>();
@@ -74,43 +74,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        HomeFragBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(MainActivity.this  , ForumActivity.class);
-//                startActivity(intent);
-//
-//            }
-//
-//        });
-//
-//        AdoptionBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                intent.setClass(MainActivity.this, AdoptionActivity.class);
-//                startActivity(intent);
-//            }
-//
-//        });
-//
-//        PetmapBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // 之後做連結 會分開
-//                Intent intent = new Intent();
-////                intent.setClass(MainActivity.this  ,PetmapFragment.class);
-//                startActivity(intent);
-//            }
-//
-//        });
-
-
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.profile) {
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
