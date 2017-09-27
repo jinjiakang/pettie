@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.sungh.pettie.Add.AddActivity;
 import com.example.sungh.pettie.R;
 
 import java.util.ArrayList;
