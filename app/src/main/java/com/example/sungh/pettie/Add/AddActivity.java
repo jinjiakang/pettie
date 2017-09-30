@@ -27,7 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.sungh.pettie.Main.ForumActivity;
+import com.example.sungh.pettie.Fourm.ForumActivity;
 import com.example.sungh.pettie.R;
 
 public class AddActivity extends AppCompatActivity {

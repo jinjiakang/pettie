@@ -59,10 +59,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void goToLocationZoom(double v, double v1, int i, String location) {
+
+
+
+    private void goToLocationZoom(double v, double v1, int i) {
         LatLng ll = new LatLng(v, v1);
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, i);
-        mMap.addMarker(new MarkerOptions().position(ll).title(location));
         mMap.moveCamera(update);
     }
 
@@ -76,14 +78,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Geocoder gc = new Geocoder(this);
         List<Address> list = gc.getFromLocationName(location, 1);
         Address address = list.get(0);
-        String locality = address.getLocality();
 
-        Toast.makeText(this, locality, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, location, Toast.LENGTH_SHORT).show();
 
         double lat = address.getLatitude();
         double lng = address.getLongitude();
 
-        goToLocationZoom(lat, lng, 30,locality);
+        goToLocationZoom(lat, lng, 15);
+
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(lat, lng))
+                .title(location));
 
         // setMarker(locality, lat, lng);
 

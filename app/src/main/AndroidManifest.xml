@@ -16,8 +16,8 @@
 
     <permission
         android:name="com.example.sungh.pettie.permission.MAPS_RECEIVE"
-        android:protectionLevel="signature"
-        />
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="com.google.android.providers.gsf.permissions.READ_GSERVICES" />
 
     <uses-feature
@@ -53,7 +53,7 @@
             android:name=".Main.NewpersonalActivity"
             android:label="註冊" />
         <activity
-            android:name=".Main.ForumActivity"
+            android:name=".Fourm.ForumActivity"
             android:label="論壇"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -70,12 +70,18 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <meta-data android:name="com.google.android.gms.version"
+        <meta-data
+            android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".Map.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".Map.PettieACTActivity"
+            android:label="活動"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Map.PettieACTFormActivity"></activity>
     </application>
 
 </manifest>

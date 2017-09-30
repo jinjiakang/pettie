@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sungh.pettie.Map.PettieACTFormActivity">
+
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="活動名稱" />
+
+        <EditText
+            android:id="@+id/activity_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="輸入名稱"
+            android:imeActionId="@+id/activityName"
+            android:imeOptions="actionUnspecified"
+            android:maxLines="1"
+            />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="活動地點" />
+
+        <EditText
+            android:id="@+id/activity_where"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="地點"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="活動日期" />
+
+        <EditText
+            android:id="@+id/_activity_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="輸入日期"
+            android:ems="10"
+            android:inputType="date" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="活動內容" />
+
+        <EditText
+            android:id="@+id/activity_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="輸入內容"
+            android:gravity="top"
+            android:imeActionId="@+id/login"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textMultiLine"
+            android:maxLines="1"
+            android:lines="5"
+            android:singleLine="true" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_where"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10pt"
+                android:layout_marginTop="10pt"
+                android:layout_weight="1"
+                android:text="標示地點" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/activity_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="建立活動" />
+
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

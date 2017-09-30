@@ -1,4 +1,4 @@
-package com.example.sungh.pettie.Main;
+package com.example.sungh.pettie.Fourm;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sungh.pettie.Add.AddActivity;
+import com.example.sungh.pettie.Map.PettieACTActivity;
 import com.example.sungh.pettie.R;
 
 import java.util.ArrayList;
@@ -164,17 +165,13 @@ public class ForumActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_fourm) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_activity) {
+            Intent pettie_act_intent = new Intent();
+            pettie_act_intent.setClass(ForumActivity.this, PettieACTActivity.class);
+            startActivity(pettie_act_intent);
+        } else if (id == R.id.nav_setting) {
 
         }
 

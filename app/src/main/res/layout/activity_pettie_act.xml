@@ -4,20 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sungh.pettie.Fourm.ForumActivity">
+    tools:context="com.example.sungh.pettie.Map.PettieACTActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            />
 
-    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_pettie_act" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -26,8 +25,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@mipmap/ic_add_white" />
-
-    <include layout="@layout/content_forum" />
+        app:srcCompat="@mipmap/ic_add_white"  />
 
 </android.support.design.widget.CoordinatorLayout>
