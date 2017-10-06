@@ -57,7 +57,7 @@
             android:label="論壇"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Main.AdoptionActivity"
+            android:name=".Adoption.AdoptionActivity"
             android:label="領養資訊" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

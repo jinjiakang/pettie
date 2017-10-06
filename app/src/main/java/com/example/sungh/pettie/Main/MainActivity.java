@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 
+import com.example.sungh.pettie.Adoption.AdoptionActivity;
 import com.example.sungh.pettie.Fourm.ForumActivity;
 import com.example.sungh.pettie.Map.MapsActivity;
 import com.example.sungh.pettie.R;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             items.add(item);
         }
         SimpleAdapter adapter = new SimpleAdapter(this,
-                items, R.layout.adoption_gridview_items, new String[]{"image", "text"},
+                items, R.layout.home_gridview_items, new String[]{"image", "text"},
                 new int[]{R.id.image, R.id.text});
 
         GridView gridView = (GridView)findViewById(R.id.gridview);
