@@ -7,6 +7,10 @@
     tools:context="com.example.sungh.pettie.Map.PettieACTActivity">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -15,8 +19,14 @@
             android:background="@color/colorPrimary"
             />
 
+        <ListView
+            android:id="@+id/textArray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
-    <include layout="@layout/content_pettie_act" />
+
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
