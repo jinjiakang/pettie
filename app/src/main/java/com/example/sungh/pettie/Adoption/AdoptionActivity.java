@@ -7,23 +7,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 
 import com.example.sungh.pettie.R;
 import com.google.gson.Gson;
-
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
-import javax.net.ssl.HttpsURLConnection;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -32,6 +31,9 @@ import okhttp3.Response;
 public class AdoptionActivity extends AppCompatActivity {
     ArrayList<String> image_list;
     ArrayList<ImageItem> item ;
+    ImageLoader imageLoader;
+    Timer timer;
+    TimerTask timertask;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +44,10 @@ public class AdoptionActivity extends AppCompatActivity {
         item = new ArrayList<>();
         GridView adoption_gridview = (GridView)findViewById(R.id.Adoption_GV);
 
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
+
+
         RunWork runWork = new RunWork();
         runWork.start();
         try{
@@ -51,8 +57,17 @@ public class AdoptionActivity extends AppCompatActivity {
         }
 
         GridViewAdapter gridview_adapter = new GridViewAdapter(this, R.layout.adoption_gridview_items, item);
-        adoption_gridview.setNumColumns(3);
+        adoption_gridview.setNumColumns(2);
         adoption_gridview.setAdapter(gridview_adapter);
+
+        adoption_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+
     }
 
     class RunWork extends Thread {
@@ -73,6 +88,10 @@ public class AdoptionActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
+
+
+
+
                 result_json = run(path_json);
 
                 Gson gson = new Gson();
@@ -84,17 +103,20 @@ public class AdoptionActivity extends AppCompatActivity {
 
                 }
 
+
                 //先取出陣列內的URL並開啟連線傳回bitmap
                 //然後再將取回來的值放入map中
 
-                for(int i = 0; i < 5; i++){
+                for(int i = 0; i < 30; i++){
                     String image_url = image_list.get(i);
                     Log.d("image_url",image_url);
-                    Bitmap bitmap = getBitmapFromURL(image_url);
+                    String image_uri_ok = checkUri(image_url);
+                    Bitmap bitmap = getBitmapImage(image_uri_ok);
                     item.add(new ImageItem(bitmap,"image#" + i));
                     Log.d("bitmap",bitmap.toString());
                     Log.d("item", "item.size() = " + item.size());
                 }
+
             }
             catch (IOException e){
                 e.printStackTrace();
@@ -103,19 +125,142 @@ public class AdoptionActivity extends AppCompatActivity {
     }
 
 
-    public static Bitmap getBitmapFromURL(String src){
+    public Bitmap getBitmapImage(String src){
         try {
-            URL url = new URL(src);
+
+            imageLoader = ImageLoader.getInstance();
+            Bitmap bmp = imageLoader.loadImageSync(src);
+            return bmp;
+
+        }catch(Exception e){
+            e.printStackTrace();
+
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_search);
+            return bm;
+        }
+    }
+
+    public String checkUri(String uri){
+
+        try {
+            URL url = new URL(uri);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoInput(true);
             conn.connect();
             InputStream input = conn.getInputStream();
-            Bitmap bitmap_from_url = BitmapFactory.decodeStream(input);
-            return bitmap_from_url;
-
+            return uri;
         } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+            return "drawable://" + R.drawable.totoro;
         }
     }
+
+
+
+//    public Bitmap getBitmapFromURL(String src){
+//        try {
+//            URL url = new URL(src);
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setDoInput(true);
+//            conn.connect();
+//            InputStream input = conn.getInputStream();
+//            Bitmap bitmap_from_url = BitmapFactory.decodeStream(input);
+//            return bitmap_from_url;
+//
+//
+//        } catch (IOException e) {
+//            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_search);
+//            return bm;
+//        }
+//    }
+
+
+    // test
+
+//    private Bitmap getBitmap(String src) {
+//        try {
+//
+//            URL url = new URL(src);
+//            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+//            connection.setDoInput(true);
+//            connection.connect();
+//            InputStream inputstream = connection.getInputStream();
+//
+//            //第一次 decode,只取得圖片長寬,還未載入記憶體
+//            BitmapFactory.Options opts = new BitmapFactory.Options();
+//            opts.inJustDecodeBounds = true;
+//            BitmapFactory.decodeStream(inputstream, null, opts);
+//
+//            inputstream.close();
+//
+//
+//            Log.d("log1","kk");
+//
+//            //取得動態計算縮圖長寬的 SampleSize (2的平方最佳)
+//            int sampleSize = 4;
+//
+//            Log.d("log2", sampleSize +"");
+//
+//            //第二次 decode,指定取樣數後,產生縮圖
+//            inputstream = connection.getInputStream();
+//            opts = new BitmapFactory.Options();
+//            opts.inSampleSize = sampleSize;
+//
+//            Log.d("log3", sampleSize + "");
+//
+//            Bitmap bmp = BitmapFactory.decodeStream(inputstream, null, opts);
+//
+//            Log.d("bmp", bmp.toString());
+//            inputstream.close();
+//
+//            return bmp;
+//
+//        } catch (Exception e) {
+//            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_search);
+//            return bm;
+//        }
+//    }
+//
+//    public static int computeSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels) {
+//
+//        int initialSize = computeInitialSampleSize(options, minSideLength,maxNumOfPixels);
+//        int roundedSize;
+//
+//        if (initialSize <= 8) {
+//            roundedSize = 1;
+//            while (roundedSize < initialSize) {
+//                roundedSize <<= 1;
+//            }
+//        } else {
+//            roundedSize = (initialSize + 7) / 8 * 8;
+//        }
+//
+//        return roundedSize;
+//
+//}
+//
+//    private static int computeInitialSampleSize(BitmapFactory.Options options,int minSideLength, int maxNumOfPixels) {
+//
+//        double w = options.outWidth;
+//        double h = options.outHeight;
+//
+//        int lowerBound = (maxNumOfPixels == -1) ? 1 :
+//                (int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
+//        int upperBound = (minSideLength == -1) ? 128 :
+//                (int) Math.min(Math.floor(w / minSideLength),
+//                        Math.floor(h / minSideLength));
+//
+//        if (upperBound < lowerBound) {
+//            // return the larger one when there is no overlapping zone.
+//            return lowerBound;
+//        }
+//
+//        if ((maxNumOfPixels == -1) &&
+//                (minSideLength == -1)) {
+//            return 1;
+//        } else if (minSideLength == -1) {
+//            return lowerBound;
+//        } else {
+//            return upperBound;
+//        }
+//    }
 }
