@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -29,6 +30,8 @@ public class ForumActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private MyAdapter mAdapter;
     private RecyclerView mRecyclerView;
+    private Fragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +117,7 @@ public class ForumActivity extends AppCompatActivity
         public void onBindViewHolder(ViewHolder holder, final int position) {
             holder.mTextView.setText(mData.get(position));
         }
-              ;
+
         @Override
         public int getItemCount() {
             return mData.size();
@@ -167,10 +170,12 @@ public class ForumActivity extends AppCompatActivity
 
         if (id == R.id.nav_fourm) {
             // Handle the camera action
+
         } else if (id == R.id.nav_activity) {
             Intent pettie_act_intent = new Intent();
             pettie_act_intent.setClass(ForumActivity.this, PettieACTActivity.class);
             startActivity(pettie_act_intent);
+
         } else if (id == R.id.nav_setting) {
 
         }
