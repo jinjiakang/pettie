@@ -1,6 +1,8 @@
 package com.example.sungh.pettie.Adoption;
 
 
+import java.util.ArrayList;
+
 public class Adoption {
     private String animal_id;
     private String animal_subid;
@@ -35,5 +37,37 @@ public class Adoption {
     public String getAlbum_file(){
         return album_file;
     }
+
+    public String getAnimal_id() { return animal_id; }
+
+    public String getAnimal_kind() { return animal_kind; }
+
+    public String getAnimal_sex() { return animal_sex; }
+
+    public String getAnimal_bodytype() { return animal_bodytype; }
+
+    public String getAnimal_colour() { return animal_colour; }
+
+    public String getAnimal_age() { return animal_age; }
+
+    public String getAnimal_sterilization() { return animal_sterilization; }
+
+    public String getAnimal_bacterin() { return animal_bacterin; }
+
+    public String getAnimal_foundplace() { return animal_foundplace; }
+
+    public String getAnimal_status() { return animal_status; }
+
+    public String getAnimal_opendate() { return animal_opendate; }
+
+    public String getAnimal_update() { return animal_update; }
+
+    public String getShelter_name() { return  shelter_name; }
+
+    public String getShelter_address() { return shelter_address; }
+
+    public String getShelter_tel() { return shelter_tel; }
+
+
 
 }

@@ -18,8 +18,13 @@
 
         <GridView
             android:id="@+id/Adoption_GV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:columnWidth="50pt"
+            android:gravity="center"
+            android:stretchMode="columnWidth"/>
 
     </LinearLayout>
 </LinearLayout>
