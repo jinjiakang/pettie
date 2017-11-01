@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.example.sungh.pettie"
         minSdkVersion 23
@@ -36,6 +36,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    compile 'com.roger.catloadinglibrary:catloadinglibrary:1.0.1'
+
 }
+
