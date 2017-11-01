@@ -3,6 +3,7 @@ package com.example.sungh.pettie.Adoption;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,8 @@ import com.example.sungh.pettie.R;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.roger.catloadinglibrary.CatLoadingView;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -32,8 +35,9 @@ public class AdoptionActivity extends AppCompatActivity {
     ArrayList<String> image_list;
     ArrayList<ImageItem> item ;
     ImageLoader imageLoader;
-    Timer timer;
-    TimerTask timertask;
+    CatLoadingView mView;
+    GridView adoption_gridview;
+    GridViewAdapter gridview_adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,23 +46,26 @@ public class AdoptionActivity extends AppCompatActivity {
 
         image_list = new ArrayList<>();
         item = new ArrayList<>();
-        GridView adoption_gridview = (GridView)findViewById(R.id.Adoption_GV);
+        adoption_gridview = (GridView)findViewById(R.id.Adoption_GV);
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
 
+        mView = new CatLoadingView();
+        mView.show(getSupportFragmentManager(), "");
 
-        RunWork runWork = new RunWork();
-        runWork.start();
-        try{
-            runWork.join();
-        }catch (InterruptedException e){
-            return ;
-        }
+        new MyRunWork().execute();
+//        RunWork runWork = new RunWork();
+//        runWork.start();
+//        try{
+//            runWork.join();
+//        }catch (InterruptedException e){
+//            return ;
+//        }
 
-        GridViewAdapter gridview_adapter = new GridViewAdapter(this, R.layout.adoption_gridview_items, item);
+        gridview_adapter = new GridViewAdapter(this, R.layout.adoption_gridview_items, item);
         adoption_gridview.setNumColumns(2);
-        adoption_gridview.setAdapter(gridview_adapter);
+//        adoption_gridview.setAdapter(gridview_adapter);
 
         adoption_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
@@ -70,59 +77,56 @@ public class AdoptionActivity extends AppCompatActivity {
 
     }
 
-    class RunWork extends Thread {
-
-        String path_json = "http://data.coa.gov.tw/Service/OpenData/AnimalOpenData.aspx";
-        String result_json = null;
-
-        OkHttpClient okHttpClient = new OkHttpClient();
-        String run(String url) throws IOException {
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
-
-            Response response = okHttpClient.newCall(request).execute();
-            return response.body().string();
-        }
-
-        @Override
-        public void run() {
-            try {
-
-
-
-
-                result_json = run(path_json);
-
-                Gson gson = new Gson();
-                Adoption[] adoptions = gson.fromJson(result_json, Adoption[].class);
-
-                //取出json資料裡的圖片URL　並存入陣列
-                for(Adoption adoption :adoptions){
-                    image_list.add(adoption.getAlbum_file());
-
-                }
-
-
-                //先取出陣列內的URL並開啟連線傳回bitmap
-                //然後再將取回來的值放入map中
-
-                for(int i = 0; i < 30; i++){
-                    String image_url = image_list.get(i);
-                    Log.d("image_url",image_url);
-                    String image_uri_ok = checkUri(image_url);
-                    Bitmap bitmap = getBitmapImage(image_uri_ok);
-                    item.add(new ImageItem(bitmap,"image#" + i));
-                    Log.d("bitmap",bitmap.toString());
-                    Log.d("item", "item.size() = " + item.size());
-                }
-
-            }
-            catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-    }
+//    class RunWork extends Thread {
+//
+//        String path_json = "http://data.coa.gov.tw/Service/OpenData/AnimalOpenData.aspx";
+//        String result_json = null;
+//
+//        OkHttpClient okHttpClient = new OkHttpClient();
+//        String run(String url) throws IOException {
+//            Request request = new Request.Builder()
+//                    .url(url)
+//                    .build();
+//
+//            Response response = okHttpClient.newCall(request).execute();
+//            return response.body().string();
+//        }
+//
+//        @Override
+//        public void run() {
+//            try {
+//
+//                result_json = run(path_json);
+//
+//                Gson gson = new Gson();
+//                Adoption[] adoptions = gson.fromJson(result_json, Adoption[].class);
+//
+//                //取出json資料裡的圖片URL　並存入陣列
+//                for(Adoption adoption :adoptions){
+//                    image_list.add(adoption.getAlbum_file());
+//
+//                }
+//
+//
+//                //先取出陣列內的URL並開啟連線傳回bitmap
+//                //然後再將取回來的值放入map中
+//
+//                for(int i = 0; i < 30; i++){
+//                    String image_url = image_list.get(i);
+//                    Log.d("image_url",image_url);
+//                    String image_uri_ok = checkUri(image_url);
+//                    Bitmap bitmap = getBitmapImage(image_uri_ok);
+//                    item.add(new ImageItem(bitmap,"image#" + i));
+//                    Log.d("bitmap",bitmap.toString());
+//                    Log.d("item", "item.size() = " + item.size());
+//                }
+//
+//            }
+//            catch (IOException e){
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 
     public Bitmap getBitmapImage(String src){
@@ -153,6 +157,67 @@ public class AdoptionActivity extends AppCompatActivity {
             return "drawable://" + R.drawable.totoro;
         }
     }
+
+    public class MyRunWork extends AsyncTask<String, Integer, Boolean>{
+
+        String path_json = "http://data.coa.gov.tw/Service/OpenData/AnimalOpenData.aspx";
+        String result_json = null;
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        String run(String url) throws IOException {
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            Response response = okHttpClient.newCall(request).execute();
+            return response.body().string();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            try {
+
+                result_json = run(path_json);
+
+                Gson gson = new Gson();
+                Adoption[] adoptions = gson.fromJson(result_json, Adoption[].class);
+
+                //取出json資料裡的圖片URL　並存入陣列
+                for(Adoption adoption :adoptions){
+                    image_list.add(adoption.getAlbum_file());
+
+                }
+
+
+                //先取出陣列內的URL並開啟連線傳回bitmap
+                //然後再將取回來的值放入map中
+
+                for(int i = 0; i < 30; i++){
+                    String image_url = image_list.get(i);
+                    Log.d("image_url",image_url);
+                    String image_uri_ok = checkUri(image_url);
+                    Bitmap bitmap = getBitmapImage(image_uri_ok);
+                    item.add(new ImageItem(bitmap,"image#" + i));
+                    Log.d("bitmap",bitmap.toString());
+                    Log.d("item", "item.size() = " + item.size());
+                }
+
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            adoption_gridview.setAdapter(gridview_adapter);
+            mView.dismiss();
+
+            super.onPostExecute(aBoolean);
+        }
+    }
+
 
 
 
