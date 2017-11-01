@@ -26,12 +26,20 @@ import com.example.sungh.pettie.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+
 public class ForumActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private MyAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private Fragment fragment;
 
+    private OkHttpClient httpClient;
+
+    private void fetchData() {
+        httpClient = new OkHttpClient.Builder().build();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +66,13 @@ public class ForumActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        Request request = new Request.Builder()
+                .url("https://api.imgur.com/3/gallery/user/rising/0.json")
+                .header("Authorization","Client-ID c62bc1a9bdf1397")
+                .header("User-Agent","Pettie")
+                .build();
 
 
         // 實作RecyclerView
@@ -126,6 +141,8 @@ public class ForumActivity extends AppCompatActivity
 
 
     }
+
+
 
 
 

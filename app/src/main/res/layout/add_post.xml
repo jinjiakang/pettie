@@ -19,43 +19,57 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:text="文章標題" />
+            android:hint="文章標題" />
 
     </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="227dp"
+        android:layout_alignParentStart="true"
+        android:id="@+id/imageView"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:onClick="onChoose"
+        android:layout_alignParentEnd="true"
+
+        android:background="?android:attr/alertDialogIcon" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/spinner_Class"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="10dp">
 
         <EditText
             android:id="@+id/text_PostContent"
-            android:gravity="top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:gravity="top"
+            android:hint="回應..."
             android:inputType="textMultiLine"
-            android:lines="15"
-            android:text="回應..." />
+            android:lines="5" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@color/colorPrimaryDark"
+            android:onClick="onUpload"
+            android:text="確認相片"
+            android:textColor="@android:color/background_light" />
+
+
 
     </LinearLayout>
+
 
 
 </LinearLayout>
