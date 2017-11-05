@@ -1,16 +1,20 @@
 package com.example.sungh.pettie.Adoption;
 
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
 import com.example.sungh.pettie.R;
 import com.google.gson.Gson;
@@ -38,6 +42,7 @@ public class AdoptionActivity extends AppCompatActivity {
     CatLoadingView mView;
     GridView adoption_gridview;
     GridViewAdapter gridview_adapter;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +52,7 @@ public class AdoptionActivity extends AppCompatActivity {
         image_list = new ArrayList<>();
         item = new ArrayList<>();
         adoption_gridview = (GridView)findViewById(R.id.Adoption_GV);
+
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
@@ -70,11 +76,22 @@ public class AdoptionActivity extends AppCompatActivity {
         adoption_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                showCustomViewDialog(view);
             }
         });
 
 
+    }
+
+    private void showCustomViewDialog(View view){
+        builder=new AlertDialog.Builder(this);
+
+        LinearLayout loginDialog= (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_adoption,null);
+        builder.setView(loginDialog);
+
+        builder.setCancelable(true);
+        AlertDialog dialog=builder.create();
+        dialog.show();
     }
 
 //    class RunWork extends Thread {
