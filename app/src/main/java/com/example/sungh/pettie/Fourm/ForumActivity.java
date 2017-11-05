@@ -1,10 +1,10 @@
 package com.example.sungh.pettie.Fourm;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,37 +13,49 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.sungh.pettie.Add.AddActivity;
 import com.example.sungh.pettie.Map.PettieACTActivity;
 import com.example.sungh.pettie.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 public class ForumActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private MyAdapter mAdapter;
+    private SimpleAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private Fragment fragment;
+    private final List<HashMap<String, String>> mAndroidPostList = new ArrayList<>();
+    private static String URL = "http://140.131.114.167/post_qry_all.php";
 
-    private OkHttpClient httpClient;
 
-    private void fetchData() {
-        httpClient = new OkHttpClient.Builder().build();
-    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum);
+        mRecyclerView = (RecyclerView) findViewById(R.id.list_view);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
 
         // 實作toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -68,25 +80,27 @@ public class ForumActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        Request request = new Request.Builder()
-                .url("https://api.imgur.com/3/gallery/user/rising/0.json")
-                .header("Authorization","Client-ID c62bc1a9bdf1397")
-                .header("User-Agent","Pettie")
-                .build();
+        StringRequest request = new StringRequest(URL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String s) {
+
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                Gson gson = gsonBuilder.create();
+                PostGson[] postGsons = gson.fromJson(s,PostGson[].class);
+                mRecyclerView.setAdapter(new MyAdapter(ForumActivity.this,postGsons));
+            }
+        },
+        new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(ForumActivity.this,"錯誤", Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(request);
 
 
-        // 實作RecyclerView
-        ArrayList<String> myDataset = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            myDataset.add(Integer.toString(i));
-        }
-
-        mAdapter = new MyAdapter(myDataset);
-        mRecyclerView = (RecyclerView) findViewById(R.id.list_view);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(mAdapter);
 
         // 判斷 fab 隱藏時機
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
@@ -106,18 +120,28 @@ public class ForumActivity extends AppCompatActivity
     }
 
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-        private List<String> mData;
+        private final Context context;
+        private PostGson[] data;
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            public TextView mTextView;
+
+            public TextView text_UserName;
+            public TextView text_Class;
+            public ImageView img_Info;
+            public TextView text_Info;
             public ViewHolder(View v) {
                 super(v);
-                mTextView = (TextView) v.findViewById(R.id.text_Info);
+                text_Info = (TextView) v.findViewById(R.id.text_Info);
+                text_UserName = (TextView) v.findViewById(R.id.text_UserName);
+                text_Class = (TextView) v.findViewById(R.id.text_Class);
+                img_Info = (ImageView) v.findViewById(R.id.img_Info);
             }
         }
 
-        public MyAdapter(List<String> data) {
-            mData = data;
+        public MyAdapter(Context context, PostGson[] data) {
+            this.context = context;
+            this.data = data;
+            
         }
 
         @Override
@@ -128,22 +152,22 @@ public class ForumActivity extends AppCompatActivity
             return vh;
         }
 
+        // RecycleView 設置畫面上的內容
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
-            holder.mTextView.setText(mData.get(position));
+            PostGson postGson = data[position];
+            holder.text_UserName.setText(postGson.getUserAccount());
+            Glide.with(holder.img_Info.getContext()).load("https://api.imgur.com/3/"+postGson.getImg_seq()).into(holder.img_Info);
         }
-
+        // 文章長度
         @Override
         public int getItemCount() {
-            return mData.size();
+            return data.length;
         }
 
 
 
     }
-
-
-
 
 
 
@@ -157,27 +181,6 @@ public class ForumActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.forum, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

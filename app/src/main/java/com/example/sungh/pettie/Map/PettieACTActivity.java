@@ -54,7 +54,6 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-//        textArray = (TextView)findViewById(R.id.textArray);
         mListView = (ListView) findViewById(R.id.textArray);
         mListView.setOnItemClickListener(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
