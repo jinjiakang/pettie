@@ -40,6 +40,14 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_pettie_act">PettieACTActivity</string>
+    <string name="notification_success">Picture uploaded.</string>
+    <string name="notification_progress">Uploading...</string>
+    <string name="notification_share_link">Picture link</string>
+    <string name="notification_fail">Upload failed.</string>
+    <string name="input_title">Title</string>
+    <string name="input_description">Description</string>
+    <string name="btn_picture">Browse</string>
+    <string name="btn_upload">Upload</string>
 
 </resources>
 
