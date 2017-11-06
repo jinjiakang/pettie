@@ -157,7 +157,9 @@ public class ForumActivity extends AppCompatActivity
         public void onBindViewHolder(ViewHolder holder, final int position) {
             PostGson postGson = data[position];
             holder.text_UserName.setText(postGson.getUserAccount());
-            Glide.with(holder.img_Info.getContext()).load("https://api.imgur.com/3/"+postGson.getImg_seq()).into(holder.img_Info);
+            holder.text_Info.setText(postGson.getPostContent());
+            holder.text_Class.setText(postGson.getTypes());
+            Glide.with(holder.img_Info.getContext()).load("http://imgur.com/"+postGson.getImg_seq()+".jpg").into(holder.img_Info);
         }
         // 文章長度
         @Override
