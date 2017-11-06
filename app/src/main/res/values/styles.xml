@@ -9,7 +9,7 @@
 
     <style name="Widget.AppTheme.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
         <!-- action bar background - without android prefix -->
-        <item name="background">@color/colorPrimary</item>
+        <item name="background">@color/colorpurple</item>
         <!-- action bar elevation - without android prefix -->
         <item name="elevation">4dp</item>
     </style>
@@ -27,9 +27,9 @@
 
     <style name="ThemeOverlay.AppTheme.PopupMenu" parent="ThemeOverlay.AppCompat.Dark">
         <!-- popup menu background - NEVER "android:background" !!! in themes -->
-        <item name="android:colorBackground">#b77f3a</item>
+        <item name="android:colorBackground">#C4A3BF</item>
         <!-- popup menu item text color -->
-        <item name="android:textColorPrimary">#b77f3a</item>
+        <item name="android:textColorPrimary">#C4A3BF</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

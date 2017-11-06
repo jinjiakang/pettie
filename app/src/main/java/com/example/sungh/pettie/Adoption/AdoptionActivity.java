@@ -1,17 +1,26 @@
 package com.example.sungh.pettie.Adoption;
 
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.sungh.pettie.R;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,11 +42,9 @@ import okhttp3.Response;
 
 public class AdoptionActivity extends AppCompatActivity {
     ArrayList<String> image_list;
-    ArrayList<ImageItem> item ;
-    ImageLoader imageLoader;
     CatLoadingView mView;
     GridView adoption_gridview;
-    GridViewAdapter gridview_adapter;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,8 +52,8 @@ public class AdoptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_adoption);
 
         image_list = new ArrayList<>();
-        item = new ArrayList<>();
         adoption_gridview = (GridView)findViewById(R.id.Adoption_GV);
+
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
@@ -55,26 +62,29 @@ public class AdoptionActivity extends AppCompatActivity {
         mView.show(getSupportFragmentManager(), "");
 
         new MyRunWork().execute();
-//        RunWork runWork = new RunWork();
-//        runWork.start();
-//        try{
-//            runWork.join();
-//        }catch (InterruptedException e){
-//            return ;
-//        }
 
-        gridview_adapter = new GridViewAdapter(this, R.layout.adoption_gridview_items, item);
+
         adoption_gridview.setNumColumns(2);
-//        adoption_gridview.setAdapter(gridview_adapter);
 
         adoption_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                showCustomViewDialog(view);
             }
         });
 
 
+    }
+
+    private void showCustomViewDialog(View view){
+        builder=new AlertDialog.Builder(this);
+
+        LinearLayout loginDialog= (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_adoption,null);
+        builder.setView(loginDialog);
+
+        builder.setCancelable(true);
+        AlertDialog dialog=builder.create();
+        dialog.show();
     }
 
 //    class RunWork extends Thread {
@@ -129,38 +139,38 @@ public class AdoptionActivity extends AppCompatActivity {
 //    }
 
 
-    public Bitmap getBitmapImage(String src){
-        try {
-
-            imageLoader = ImageLoader.getInstance();
-            Bitmap bmp = imageLoader.loadImageSync(src);
-            return bmp;
-
-        }catch(Exception e){
-            e.printStackTrace();
-
-            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_search);
-            return bm;
-        }
-    }
-
-    public String checkUri(String uri){
-
-        try {
-            URL url = new URL(uri);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoInput(true);
-            conn.connect();
-            InputStream input = conn.getInputStream();
-            return uri;
-        } catch (IOException e) {
-            return "drawable://" + R.drawable.totoro;
-        }
-    }
+//    public Bitmap getBitmapImage(String src){
+//        try {
+//
+//            imageLoader = ImageLoader.getInstance();
+//            Bitmap bmp = imageLoader.loadImageSync(src);
+//            return bmp;
+//
+//        }catch(Exception e){
+//            e.printStackTrace();
+//
+//            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_search);
+//            return bm;
+//        }
+//    }
+//
+//    public String checkUri(String uri){
+//
+//        try {
+//            URL url = new URL(uri);
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setDoInput(true);
+//            conn.connect();
+//            InputStream input = conn.getInputStream();
+//            return uri;
+//        } catch (IOException e) {
+//            return "drawable://" + R.drawable.totoro;
+//        }
+//    }
 
     public class MyRunWork extends AsyncTask<String, Integer, Boolean>{
 
-        String path_json = "http://data.coa.gov.tw/Service/OpenData/AnimalOpenData.aspx";
+        String path_json = "http://data.coa.gov.tw/Service/OpenData/AnimalOpenData.aspx?$top=100";
         String result_json = null;
 
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -182,9 +192,12 @@ public class AdoptionActivity extends AppCompatActivity {
                 Gson gson = new Gson();
                 Adoption[] adoptions = gson.fromJson(result_json, Adoption[].class);
 
+                //取出url
+
                 //取出json資料裡的圖片URL　並存入陣列
                 for(Adoption adoption :adoptions){
                     image_list.add(adoption.getAlbum_file());
+                    Log.d("img_list", adoption.getAlbum_file());
 
                 }
 
@@ -192,15 +205,16 @@ public class AdoptionActivity extends AppCompatActivity {
                 //先取出陣列內的URL並開啟連線傳回bitmap
                 //然後再將取回來的值放入map中
 
-                for(int i = 0; i < 30; i++){
-                    String image_url = image_list.get(i);
-                    Log.d("image_url",image_url);
-                    String image_uri_ok = checkUri(image_url);
-                    Bitmap bitmap = getBitmapImage(image_uri_ok);
-                    item.add(new ImageItem(bitmap,"image#" + i));
-                    Log.d("bitmap",bitmap.toString());
-                    Log.d("item", "item.size() = " + item.size());
-                }
+//                for(int i = 0; i < 30; i++){
+//                    String image_url = image_list.get(i);
+//                    Log.d("image_url",image_url);
+//
+////                    String image_uri_ok = checkUri(image_url);
+////                    Bitmap bitmap = getBitmapImage(image_uri_ok);
+//                    item.add(new ImageItem(bitmap,"image#" + i));
+//                    Log.d("bitmap",bitmap.toString());
+//                    Log.d("item", "item.size() = " + item.size());
+//                }
 
             }
             catch (IOException e){
@@ -211,12 +225,46 @@ public class AdoptionActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            adoption_gridview.setAdapter(gridview_adapter);
+            adoption_gridview.setAdapter(new ImageListAdapter(AdoptionActivity.this, image_list));
             mView.dismiss();
 
             super.onPostExecute(aBoolean);
         }
     }
+
+    public class ImageListAdapter extends ArrayAdapter {
+        private Context context;
+        private LayoutInflater inflater;
+
+        private ArrayList<String> imageUrls;
+
+        public ImageListAdapter(Context context, ArrayList<String> imageUrls) {
+            super(context, R.layout.adoption_gridview_items, imageUrls);
+
+            this.context = context;
+            this.imageUrls = imageUrls;
+
+            inflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (null == convertView) {
+                convertView = inflater.inflate(R.layout.adoption_gridview_items, parent, false);
+            }
+
+            Glide
+                .with(context)
+                .load(imageUrls.get(position))
+                .error(R.drawable.totoro)
+                .into((ImageView) convertView);
+
+            return convertView;
+        }
+    }
+
+
+
 
 
 
