@@ -18,10 +18,12 @@
 
             <ImageView
                 android:id="@+id/animal_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100pt"
+                android:layout_height="100pt"
                 android:layout_weight="1"
-                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginBottom="5pt"
+
                 />
 
         </LinearLayout>
@@ -36,102 +38,91 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="ID：" />
             <TextView
                 android:id="@+id/animal_kind_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="類型：" />
             <TextView
                 android:id="@+id/animal_sex_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="性別：" />
             <TextView
                 android:id="@+id/animal_bodytype_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="體型：" />
             <TextView
                 android:id="@+id/animal_colour_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="毛色：" />
             <TextView
                 android:id="@+id/animal_age_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="年紀：" />
             <TextView
                 android:id="@+id/animal_sterilization_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="是否絕育：" />
             <TextView
                 android:id="@+id/animal_bacterin_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="是否施打狂犬病疫苗：" />
             <TextView
                 android:id="@+id/animal_foundplace_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="尋獲地：" />
             <TextView
                 android:id="@+id/animal_status_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="狀態：" />
             <TextView
                 android:id="@+id/animal_opendate_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="開放認養時間：" />
             <TextView
                 android:id="@+id/animal_update_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="資料更新時間：" />
             <TextView
                 android:id="@+id/animal_shelter_name_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="收容所名稱：" />
             <TextView
                 android:id="@+id/animal_shelter_address_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="收容所住址：" />
             <TextView
                 android:id="@+id/animal_shelter_tel_txv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
-
-
-
-
-
-
-
-
-
-
-
+                android:text="收容所電話：" />
 
         </LinearLayout>
     </LinearLayout>

@@ -38,6 +38,10 @@ public class Adoption {
         return album_file;
     }
 
+    public String getAnimal_place(){
+        return animal_place;
+    }
+
     public String getAnimal_id() { return animal_id; }
 
     public String getAnimal_kind() { return animal_kind; }
