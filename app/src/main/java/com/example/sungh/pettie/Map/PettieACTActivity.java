@@ -37,9 +37,9 @@ import okhttp3.Response;
 public class PettieACTActivity extends ForumActivity implements AdapterView.OnItemClickListener {
 
         private TextView textArray;
-        private  ListView mListView;
+        private ListView mListView;
         private final List<HashMap<String, String>> mAndroidMapList = new ArrayList<>();
-     private SimpleAdapter adapter;
+        private SimpleAdapter adapter;
 
     @Override
         protected void onCreate (Bundle savedInstanceState){

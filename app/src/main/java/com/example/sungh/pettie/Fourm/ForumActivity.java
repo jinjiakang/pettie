@@ -1,6 +1,7 @@
 package com.example.sungh.pettie.Fourm;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,15 +9,20 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,9 +39,15 @@ import com.example.sungh.pettie.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 public class ForumActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,9 +55,11 @@ public class ForumActivity extends AppCompatActivity
     private RecyclerView mRecyclerView;
     private final List<HashMap<String, String>> mAndroidPostList = new ArrayList<>();
     private static String URL = "http://140.131.114.167/post_qry_all.php";
-
-
-
+    private String commentAry;
+    private List<HashMap<String, String>> mAndroidMapList;
+    private SimpleAdapter adapter;
+    private ListView mListView;
+    private int p;
 
 
     @Override
@@ -112,7 +126,6 @@ public class ForumActivity extends AppCompatActivity
                 } else{
                     fab.show();
                 }
-
                 super.onScrolled(recyclerView, dx, dy);
             }
 
@@ -129,12 +142,18 @@ public class ForumActivity extends AppCompatActivity
             public TextView text_Class;
             public ImageView img_Info;
             public TextView text_Info;
+            public Button comment_Info;
+            public Button comment_Push;
             public ViewHolder(View v) {
                 super(v);
                 text_Info = (TextView) v.findViewById(R.id.text_Info);
                 text_UserName = (TextView) v.findViewById(R.id.text_UserName);
                 text_Class = (TextView) v.findViewById(R.id.text_Class);
                 img_Info = (ImageView) v.findViewById(R.id.img_Info);
+                comment_Info = (Button) v.findViewById(R.id.comment_Info);
+                comment_Push = (Button) v.findViewById(R.id.comment_Push);
+
+
             }
         }
 
@@ -149,17 +168,41 @@ public class ForumActivity extends AppCompatActivity
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item, parent, false);
             ViewHolder vh = new ViewHolder(v);
+
+
+
+
+
             return vh;
         }
 
         // RecycleView 設置畫面上的內容
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
-            PostGson postGson = data[position];
+            final PostGson postGson = data[position];
             holder.text_UserName.setText(postGson.getUserAccount());
             holder.text_Info.setText(postGson.getPostContent());
             holder.text_Class.setText(postGson.getTypes());
+
+            holder.comment_Push.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openResondDialog(position,postGson.getPostNo());
+                }
+            });
+
+            holder.comment_Info.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openContentDialog(position,data);
+                }
+            });
+
             Glide.with(holder.img_Info.getContext()).load("http://imgur.com/"+postGson.getImg_seq()+".jpg").into(holder.img_Info);
+
+
+
+
         }
         // 文章長度
         @Override
@@ -206,4 +249,106 @@ public class ForumActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    private void openContentDialog(final int position, PostGson[] data) {
+        final PostGson postGson = data[position];
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View content =  inflater.inflate(R.layout.comment_info, null);
+
+//        OkHttpClient client = new OkHttpClient();
+//        String url = "http://140.131.114.167/Comment_qry.php?PostNo="+postGson.getPostNo();
+//         final TextView textView = (TextView)content.findViewById(R.id.text_com);
+//        Log.d("url_postion",url);
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .build();
+//        Call call = client.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//                //告知使用者連線失敗
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+//                String json = response.body().string();
+//                Log.d("OKHTTP", json);
+//                //解析JSON
+//                parseJSON(json);
+//            }
+//
+//            private void parseJSON(String json) {
+//
+//                Gson gson = new Gson();
+//                CommentGson[] commentGsons = gson.fromJson(json,CommentGson[].class);
+//
+//                StringBuilder sb = new StringBuilder();
+//                for(CommentGson com :commentGsons){
+//                    sb.append(com.getUserAccount()).append(" ")
+//                            .append(com.getComContent()).append(" ")
+//                            .append(com.getComTime()).append("\n\n");
+//                }
+//
+//                textView.setText(sb);
+//
+//            }
+//        });
+
+
+
+        dialog.setView(content);
+        dialog.setTitle(postGson.getPostTitle());
+        dialog.show();
+    }
+
+
+
+    private void openResondDialog(final int position, final String postno) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View content =  inflater.inflate(R.layout.comment_push, null);
+        final EditText comment = (EditText) content.findViewById(R.id.comment_content);
+
+        dialog.setPositiveButton("送出", new DialogInterface.OnClickListener() {
+            public void onClick( DialogInterface dialoginterface, int i) {
+                // 當使用者按下確定鈕後所執行的動作
+
+                final OkHttpClient client = new OkHttpClient();
+                final RequestBody formBody = new FormBody.Builder()
+                        .add("ComContent",comment.getText().toString())
+                        .add("PostNo",postno)
+                        .add("UserAccount","test")
+                        .build();
+
+                final Request request = new Request.Builder()
+                        .url("http://140.131.114.167/comment_ins.php")
+                        .post(formBody)
+                        .build();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        okhttp3.Response response = null;
+                        try {
+                            response = client.newCall(request).execute();
+                            if (response.isSuccessful()) {
+                                Log.i("commentPost","T輸出: " + comment.getText().toString()+postno);
+                            } else {
+                                throw new IOException("Unexpected code " + response);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+        } );
+        dialog.setView(content);
+        dialog.show();
+    }
+
+
+
 }
