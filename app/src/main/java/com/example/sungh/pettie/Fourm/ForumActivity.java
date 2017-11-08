@@ -181,8 +181,15 @@ public class ForumActivity extends AppCompatActivity
         public void onBindViewHolder(ViewHolder holder, final int position) {
             final PostGson postGson = data[position];
             holder.text_UserName.setText(postGson.getUserAccount());
-            holder.text_Info.setText(postGson.getPostContent());
+            holder.text_Info.setText(postGson.getPostTitle());
             holder.text_Class.setText(postGson.getTypes());
+
+            holder.text_Info.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openCommentDialog(postGson.getPostContent());
+                }
+            });
 
             holder.comment_Push.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -251,56 +258,26 @@ public class ForumActivity extends AppCompatActivity
     }
 
 
-    private void openContentDialog(final int position, PostGson[] data) {
-        final PostGson postGson = data[position];
+    private void openCommentDialog(String postContent) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-        View content =  inflater.inflate(R.layout.comment_info, null);
-
-//        OkHttpClient client = new OkHttpClient();
-//        String url = "http://140.131.114.167/Comment_qry.php?PostNo="+postGson.getPostNo();
-//         final TextView textView = (TextView)content.findViewById(R.id.text_com);
-//        Log.d("url_postion",url);
-//        Request request = new Request.Builder()
-//                .url(url)
-//                .build();
-//        Call call = client.newCall(request);
-//        call.enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                //告知使用者連線失敗
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-//                String json = response.body().string();
-//                Log.d("OKHTTP", json);
-//                //解析JSON
-//                parseJSON(json);
-//            }
-//
-//            private void parseJSON(String json) {
-//
-//                Gson gson = new Gson();
-//                CommentGson[] commentGsons = gson.fromJson(json,CommentGson[].class);
-//
-//                StringBuilder sb = new StringBuilder();
-//                for(CommentGson com :commentGsons){
-//                    sb.append(com.getUserAccount()).append(" ")
-//                            .append(com.getComContent()).append(" ")
-//                            .append(com.getComTime()).append("\n\n");
-//                }
-//
-//                textView.setText(sb);
-//
-//            }
-//        });
-
-
-
+        View content =  inflater.inflate(R.layout.comment_info_all, null);
+        final TextView textView = (TextView) content.findViewById(R.id.text_Info_all);
+        textView.setText(postContent);
         dialog.setView(content);
-        dialog.setTitle(postGson.getPostTitle());
         dialog.show();
+    }
+
+
+    private void openContentDialog(final int position, PostGson[] data) {
+        final PostGson postGson = data[position];
+
+        Intent intent = new Intent();
+        intent.setClass(ForumActivity.this, CommentActivity.class);
+        intent.putExtra("position",postGson.getPostNo());
+        startActivity(intent);
+
+
     }
 
 

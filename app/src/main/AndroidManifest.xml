@@ -66,6 +66,9 @@
         <activity
             android:name=".Adoption.AdoptionActivity"
             android:label="領養資訊" />
+        <activity
+            android:name=".Fourm.CommentActivity"
+            android:label="留言" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

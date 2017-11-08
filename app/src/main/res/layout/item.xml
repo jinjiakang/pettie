@@ -58,10 +58,11 @@
         <TextView
             android:id="@+id/text_Info"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:gravity="center"
-            android:text="我是文章內容"
+            android:text="等待..."
+
             android:maxLines="1"
             android:textSize="20sp" />
 
@@ -78,7 +79,7 @@
 
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="內文"
+                    android:text="查看留言"
                     android:textSize="15sp" />
 
                 <Button
@@ -88,7 +89,7 @@
 
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="回應"
+                    android:text="留言"
                     android:textSize="15sp" />
 
             </LinearLayout>
