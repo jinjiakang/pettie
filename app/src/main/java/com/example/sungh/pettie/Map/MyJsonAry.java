@@ -5,25 +5,14 @@ package com.example.sungh.pettie.Map;
  */
 
 public class MyJsonAry {
-
     private String ActNo;
-
-
     private String ActName;
-
-
     private String ActLocation;
-
-
     private String ActDate;
-
-
     private String ActContent;
-
     private String MapX;
-
-
     private String MapY;
+    private String Name;
 
     public String getActNo() {
         return ActNo;
@@ -79,5 +68,13 @@ public class MyJsonAry {
 
     public void setMapY(String mapY) {
         MapY = mapY;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
     }
 }

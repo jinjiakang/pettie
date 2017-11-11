@@ -12,8 +12,9 @@ public class PostGson {
     private String Img_seq;
     private String Likes;
     private String Types;
-    private String UserAccount;
+    private String Name;
     private String PostTime;
+    private String Img_user;
 
     public String getPostNo() {
         return PostNo;
@@ -63,14 +64,6 @@ public class PostGson {
         Types = types;
     }
 
-    public String getUserAccount() {
-        return UserAccount;
-    }
-
-    public void setUserAccount(String userAccount) {
-        UserAccount = userAccount;
-    }
-
     public String getPostTime() {
         return PostTime;
     }
@@ -79,5 +72,19 @@ public class PostGson {
         PostTime = postTime;
     }
 
+    public String getName() {
+        return Name;
+    }
 
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public String getImg_user() {
+        return Img_user;
+    }
+
+    public void setImg_user(String img_user) {
+        Img_user = img_user;
+    }
 }

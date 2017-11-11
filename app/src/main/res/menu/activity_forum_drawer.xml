@@ -3,6 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_home"
+
+            android:title="首頁" />
+        <item
             android:id="@+id/nav_fourm"
 
             android:title="論壇" />
@@ -10,10 +14,7 @@
             android:id="@+id/nav_activity"
 
             android:title="活動" />
-        <item
-            android:id="@+id/nav_setting"
 
-            android:title="設定" />
     </group>
 
     <!--<item android:title="Communicate">-->

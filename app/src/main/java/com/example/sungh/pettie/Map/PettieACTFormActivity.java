@@ -20,7 +20,9 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.sungh.pettie.Main.LoginActivity;
 import com.example.sungh.pettie.R;
+import com.facebook.AccessToken;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -57,6 +59,15 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pettie_actform);
+        // 判斷權限
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Toast.makeText(PettieACTFormActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent();
+            intent.setClass(PettieACTFormActivity.this, LoginActivity.class);
+            startActivity(intent);
+
+
+        }
         mButtonWhere = (Button) findViewById(R.id.button_where);
         mButtonActSet = (Button) findViewById(R.id.activity_set);
         mEditActName = (EditText) findViewById(R.id.activity_name);
@@ -160,6 +171,7 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
                 .add("ActContent", mEditActContent.getText().toString())
                 .add("MapX",STlat)
                 .add("MapY",STlng)
+                .add("UserAccount", AccessToken.getCurrentAccessToken().getUserId())
                 .build();
 
         final Request request = new Request.Builder()

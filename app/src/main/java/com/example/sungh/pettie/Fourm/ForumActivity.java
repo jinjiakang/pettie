@@ -34,8 +34,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.sungh.pettie.Add.AddActivity;
+import com.example.sungh.pettie.Main.LoginActivity;
+import com.example.sungh.pettie.Main.MainActivity;
 import com.example.sungh.pettie.Map.PettieACTActivity;
 import com.example.sungh.pettie.R;
+import com.facebook.AccessToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -138,6 +141,7 @@ public class ForumActivity extends AppCompatActivity
 
         public class ViewHolder extends RecyclerView.ViewHolder {
 
+            public ImageView img_User;
             public TextView text_UserName;
             public TextView text_Class;
             public ImageView img_Info;
@@ -152,7 +156,7 @@ public class ForumActivity extends AppCompatActivity
                 img_Info = (ImageView) v.findViewById(R.id.img_Info);
                 comment_Info = (Button) v.findViewById(R.id.comment_Info);
                 comment_Push = (Button) v.findViewById(R.id.comment_Push);
-
+                img_User = (ImageView)v.findViewById(R.id.img_User);
 
             }
         }
@@ -168,11 +172,6 @@ public class ForumActivity extends AppCompatActivity
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item, parent, false);
             ViewHolder vh = new ViewHolder(v);
-
-
-
-
-
             return vh;
         }
 
@@ -180,7 +179,7 @@ public class ForumActivity extends AppCompatActivity
         @Override
         public void onBindViewHolder(ViewHolder holder, final int position) {
             final PostGson postGson = data[position];
-            holder.text_UserName.setText(postGson.getUserAccount());
+            holder.text_UserName.setText(postGson.getName());
             holder.text_Info.setText(postGson.getPostTitle());
             holder.text_Class.setText(postGson.getTypes());
 
@@ -206,7 +205,7 @@ public class ForumActivity extends AppCompatActivity
             });
 
             Glide.with(holder.img_Info.getContext()).load("http://imgur.com/"+postGson.getImg_seq()+".jpg").into(holder.img_Info);
-
+            Glide.with(holder.img_User.getContext()).load(postGson.getImg_user()).into(holder.img_User);
 
 
 
@@ -248,8 +247,10 @@ public class ForumActivity extends AppCompatActivity
             pettie_act_intent.setClass(ForumActivity.this, PettieACTActivity.class);
             startActivity(pettie_act_intent);
 
-        } else if (id == R.id.nav_setting) {
-
+        } else if (id == R.id.nav_home) {
+            Intent pettie_act_intent = new Intent();
+            pettie_act_intent.setClass( ForumActivity.this, MainActivity.class);
+            startActivity(pettie_act_intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -270,6 +271,14 @@ public class ForumActivity extends AppCompatActivity
 
 
     private void openContentDialog(final int position, PostGson[] data) {
+
+        // 權限判斷
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Toast.makeText(ForumActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent();
+            intent.setClass(ForumActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
         final PostGson postGson = data[position];
 
         Intent intent = new Intent();
@@ -296,7 +305,7 @@ public class ForumActivity extends AppCompatActivity
                 final RequestBody formBody = new FormBody.Builder()
                         .add("ComContent",comment.getText().toString())
                         .add("PostNo",postno)
-                        .add("UserAccount","test")
+                        .add("UserAccount",AccessToken.getCurrentAccessToken().getUserId())
                         .build();
 
                 final Request request = new Request.Builder()

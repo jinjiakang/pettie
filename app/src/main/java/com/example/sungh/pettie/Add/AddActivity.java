@@ -41,7 +41,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.sungh.pettie.Fourm.ForumActivity;
+import com.example.sungh.pettie.Main.LoginActivity;
 import com.example.sungh.pettie.R;
+import com.facebook.AccessToken;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,7 +78,13 @@ public class AddActivity extends AppCompatActivity {
         // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_post);
-
+        // 權限判斷
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Toast.makeText(AddActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent();
+            intent.setClass(AddActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
         mEditPostName = (EditText) findViewById(R.id.text_PostName);
         mEditPostContent = (EditText) findViewById(R.id.text_PostContent);
         mPhotoView = (ImageView) findViewById(R.id.imageView);
@@ -147,8 +155,6 @@ public class AddActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 
     @Override
@@ -235,15 +241,6 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //顯示
@@ -282,8 +279,7 @@ public class AddActivity extends AppCompatActivity {
                 .add("Img_seq", imgUML.toString())
                 .add("Likes","0")
                 .add("Types", "pet")
-                .add("UserAccount", "test")
-                .add("PostTime", "2017-11-05 00:00:00")
+                .add("UserAccount", AccessToken.getCurrentAccessToken().getUserId())
                 .build();
 
         final Request request = new Request.Builder()

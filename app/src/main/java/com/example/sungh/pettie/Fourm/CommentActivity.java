@@ -82,7 +82,7 @@ public class CommentActivity extends AppCompatActivity {
                     map.put("ComContent", com.getComContent());
                     map.put("ComTime", com.getComTime());
                     map.put("PostNo", com.getComNo());
-                    map.put("UserAccount",  com.getUserAccount());
+                    map.put("UserAccount",  com.getName());
 
                     mAndroidMapList.add(map);
                     Log.d("maparry", map.toString());

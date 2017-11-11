@@ -9,7 +9,16 @@ public class CommentGson {
     private String ComContent;
     private String ComTime;
     private String PostNo;
-    private String UserAccount;
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    private String Name;
     public String getComNo() {
         return ComNo;
     }
@@ -42,13 +51,7 @@ public class CommentGson {
         PostNo = postNo;
     }
 
-    public String getUserAccount() {
-        return UserAccount;
-    }
 
-    public void setUserAccount(String userAccount) {
-        UserAccount = userAccount;
-    }
 
 
 }

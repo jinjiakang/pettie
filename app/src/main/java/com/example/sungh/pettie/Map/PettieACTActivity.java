@@ -18,9 +18,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sungh.pettie.Fourm.ForumActivity;
+import com.example.sungh.pettie.Main.LoginActivity;
+import com.example.sungh.pettie.Main.MainActivity;
 import com.example.sungh.pettie.R;
+import com.facebook.AccessToken;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -122,6 +126,14 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
 
     // 刪除的動作
     private void openDeleteDialog(String sure, final String no, final int position) {
+        // 權限判斷
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Toast.makeText(PettieACTActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent();
+            intent.setClass(PettieACTActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("Delete");
         // 承接傳過來的字串，顯示在對話框之中
@@ -139,6 +151,7 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
                 final OkHttpClient client = new OkHttpClient();
                 final RequestBody formBody = new FormBody.Builder()
                         .add("ActNo",no)
+                        .add("UserAccount", AccessToken.getCurrentAccessToken().getUserId())
                         .build();
 
                 final Request request = new Request.Builder()
@@ -163,7 +176,8 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
                     }
                 }).start();
 
-
+                Intent intent = new Intent(PettieACTActivity.this, PettieACTActivity.class);
+                startActivity(intent);
             }
         }
 
@@ -265,8 +279,10 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
         } else if (id == R.id.nav_activity) {
 
 
-        } else if (id == R.id.nav_setting) {
-
+        } else if (id == R.id.nav_home) {
+            Intent pettie_act_intent = new Intent();
+            pettie_act_intent.setClass(PettieACTActivity.this, MainActivity.class);
+            startActivity(pettie_act_intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

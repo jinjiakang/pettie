@@ -6,8 +6,10 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.example.sungh.pettie.R;
@@ -18,13 +20,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private List<HashMap<String, String>> mAndroidMapList;
+    private SimpleAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +44,65 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        new RunWrok().start();
     }
+
+        class RunWrok extends Thread {
+        String path_json = "http://140.131.114.167/act_qry.php";
+        String result_json = null;
+
+            /* This program downloads a URL and print its contents as a string.*/
+        OkHttpClient client = new OkHttpClient();
+
+        // get 方法 參考 http://square.github.io/okhttp/
+        String run(String url) throws IOException {
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        }
+
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                Gson gson = new Gson();
+                MyJsonAry[] ACTacts = gson.fromJson(result_json, MyJsonAry[].class);
+
+                    // 插所有活動點
+                for (MyJsonAry act : ACTacts) {
+
+                    double valueX = Double.parseDouble(act.getMapX());
+                    double valueY = Double.parseDouble(act.getMapY());
+                    mMap.addMarker(new MarkerOptions()
+
+                            .position(new LatLng(valueX,valueY))
+                            .title( act.getActLocation())
+                            .snippet(act.getActName()));
+
+                }
+
+            }
+        };
+
+        @Override
+        public void run() {
+            try {
+                //1.抓資料
+                result_json = run(path_json);
+                Log.d("json1", result_json);
+
+                runOnUiThread(task);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+}
+
+
 
 
     /**
@@ -90,7 +158,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .position(new LatLng(lat, lng))
                 .title(location));
 
-        // setMarker(locality, lat, lng);
 
     }
 }
