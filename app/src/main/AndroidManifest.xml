@@ -30,13 +30,13 @@
         android:required="true" />
 
     <application
-        tools:replace="android:icon"
         android:allowBackup="true"
-        android:largeHeap="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
         <activity
             android:name=".Main.MainActivity"
             android:label="首頁">
@@ -54,12 +54,6 @@
             android:name=".Main.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name=".Main.PersonalActivity"
-            android:label="個人頁面" />
-        <activity
-            android:name=".Main.NewpersonalActivity"
-            android:label="註冊" />
-        <activity
             android:name=".Fourm.ForumActivity"
             android:label="論壇"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -69,6 +63,7 @@
         <activity
             android:name=".Fourm.CommentActivity"
             android:label="留言" />
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -89,27 +84,26 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
         <activity
             android:name="com.facebook.CustomTabActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".Map.MapsActivity"
             android:label="@string/title_activity_maps" />
@@ -117,7 +111,10 @@
             android:name=".Map.PettieACTActivity"
             android:label="活動"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Map.PettieACTFormActivity"></activity>
+        <activity android:name=".Map.PettieACTFormActivity" />
+        <activity
+            android:name=".Main.MypostActivity"
+            android:label="個人文章"></activity>
     </application>
 
 </manifest>

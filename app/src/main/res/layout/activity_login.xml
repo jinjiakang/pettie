@@ -52,18 +52,27 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fb_login_form"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center|bottom"
                 android:onClick="goHome"
                 android:text="回到首頁" />
-        </RelativeLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|bottom"
+                android:onClick="myPost"
+                android:text="個人文章" />
+
+        </LinearLayout>
 
 
 </RelativeLayout>

@@ -209,6 +209,20 @@ public class LoginActivity extends FragmentActivity {
 
     }
 
+    public void myPost(View view){
+        // 權限判斷
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Toast.makeText(LoginActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent();
+            intent.setClass(LoginActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this, MypostActivity.class);
+        startActivity(intent);
+    }
+
+
     class RunWrok extends Thread{
         String path_json ="http://140.131.114.167/user_Img.php?UserAccount="+ AccessToken.getCurrentAccessToken().getUserId();
         String result_json = null;
@@ -239,8 +253,6 @@ public class LoginActivity extends FragmentActivity {
                             .into(mImgPhoto);
                     mTextDescription.setText(user_Img.getName());
                 }
-
-
 
             }
         };
