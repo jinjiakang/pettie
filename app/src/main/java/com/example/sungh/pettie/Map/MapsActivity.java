@@ -12,12 +12,14 @@ import android.widget.EditText;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.sungh.pettie.Adoption.Adoption;
 import com.example.sungh.pettie.R;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
@@ -49,9 +51,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
         class RunWrok extends Thread {
-        String path_json = "http://140.131.114.167/act_qry.php";
-        String result_json = null;
-
+        //設置寵物的位置和活動位置點
+        String path_json1 = "http://data.coa.gov.tw/Service/OpenData/AnimalOpenData.aspx?$top=50";// 先抓50筆
+            String path_json2 ="http://140.131.114.167/act_qry.php";
+        String result_json1 = null;
+            String result_json2 = null;
             /* This program downloads a URL and print its contents as a string.*/
         OkHttpClient client = new OkHttpClient();
 
@@ -69,8 +73,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void run() {
                 Gson gson = new Gson();
-                MyJsonAry[] ACTacts = gson.fromJson(result_json, MyJsonAry[].class);
-
+                MyJsonAry[] ACTacts = gson.fromJson(result_json2, MyJsonAry[].class);
+                Adoption[] adoptions = gson.fromJson(result_json1,Adoption[].class);
                     // 插所有活動點
                 for (MyJsonAry act : ACTacts) {
 
@@ -84,6 +88,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 }
 
+                for (Adoption ado : adoptions){
+
+                    String location = ado.getShelter_address();
+
+                    try {
+                        goLo(location);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
             }
         };
 
@@ -91,9 +106,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         public void run() {
             try {
                 //1.抓資料
-                result_json = run(path_json);
-                Log.d("json1", result_json);
-
+                result_json1 = run(path_json1);
+                result_json2 = run(path_json2);
+                Log.d("json1", result_json1);
                 runOnUiThread(task);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -102,18 +117,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 }
 
+    private void goLo(String location) throws IOException {
+        Geocoder gc = new Geocoder(this);
+        List<Address> list = gc.getFromLocationName(location, 1);
+        Log.d("location_eric_list", location+" "+ list );
+        if (list.isEmpty()){
+            return;
+        }else {
+            Address address = list.get(0);
+            double lat = address.getLatitude();
+            double lng = address.getLongitude();
+
+            Log.d("location_eric", location + lat + lng);
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(lat, lng))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                    .title(location));
+        }
+    }
 
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
