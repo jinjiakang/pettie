@@ -5,7 +5,8 @@
 
     <item android:id="@+id/profile"
         android:title="null"
-        android:icon="@drawable/ic_action_profile"
+        android:icon="@drawable/ic_action_profile_white"
+
         app:showAsAction="always" />
 
     <!--<item android:id="@+id/action_settings"-->

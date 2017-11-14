@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_forum"
+        android:background="@color/colorpurple"
         app:menu="@menu/activity_forum_drawer" />
 
 

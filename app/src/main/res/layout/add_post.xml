@@ -61,9 +61,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorFB"
             android:onClick="onUpload"
-            android:text="確認相片"
+            android:text="新增文章"
             android:textColor="@android:color/background_light" />
 
 

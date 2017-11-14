@@ -74,6 +74,7 @@ public class ForumActivity extends AppCompatActivity
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
+        
         // 實作toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -143,20 +144,21 @@ public class ForumActivity extends AppCompatActivity
 
             public ImageView img_User;
             public TextView text_UserName;
-            public TextView text_Class;
             public ImageView img_Info;
             public TextView text_Info;
             public Button comment_Info;
             public Button comment_Push;
+            public TextView text_content;
+
             public ViewHolder(View v) {
                 super(v);
                 text_Info = (TextView) v.findViewById(R.id.text_Info);
                 text_UserName = (TextView) v.findViewById(R.id.text_UserName);
-                text_Class = (TextView) v.findViewById(R.id.text_Class);
                 img_Info = (ImageView) v.findViewById(R.id.img_Info);
                 comment_Info = (Button) v.findViewById(R.id.comment_Info);
                 comment_Push = (Button) v.findViewById(R.id.comment_Push);
-                img_User = (ImageView)v.findViewById(R.id.img_User);
+                img_User = (de.hdodenhof.circleimageview.CircleImageView)v.findViewById(R.id.img_User);
+                text_content = (TextView)v.findViewById(R.id.text_content);
 
             }
         }
@@ -181,7 +183,8 @@ public class ForumActivity extends AppCompatActivity
             final PostGson postGson = data[position];
             holder.text_UserName.setText(postGson.getName());
             holder.text_Info.setText(postGson.getPostTitle());
-            holder.text_Class.setText(postGson.getTypes());
+            holder.text_content.setText(postGson.getPostContent());
+//            holder.text_Class.setText(postGson.getTypes());
 
             holder.text_Info.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -236,6 +239,7 @@ public class ForumActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 

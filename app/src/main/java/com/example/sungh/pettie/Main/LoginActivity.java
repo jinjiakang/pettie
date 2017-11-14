@@ -54,7 +54,7 @@ public class LoginActivity extends FragmentActivity {
         setContentView(R.layout.activity_login);
         callbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-        mImgPhoto = (ImageView) findViewById(R.id.mImgPhoto);
+        mImgPhoto = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.mImgPhoto);
         mTextDescription = (TextView)findViewById(R.id.fb_name);
 
         if (accessToken.getCurrentAccessToken() != null) {
