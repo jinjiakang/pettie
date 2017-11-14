@@ -33,8 +33,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -136,12 +134,13 @@ public class AddActivity extends AppCompatActivity {
                     return;
                 }
                 if (response.isSuccessful()) {
-                    Toast.makeText(AddActivity.this, "Upload successful !", Toast.LENGTH_SHORT)
+                    Toast.makeText(AddActivity.this, "To imgure....", Toast.LENGTH_SHORT)
                             .show();
-
                     imgUML = response.body().data.id;
                     Log.d("URL Picture", "http://imgur.com/" + response.body().data.id);
                     notificationHelper.createUploadedNotification(response.body());
+                    // 傳給我們資料庫
+                    PostPage();
                 }
             }
 
@@ -241,22 +240,8 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //顯示
-        getMenuInflater().inflate(R.menu.menu_next, menu);
 
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.next:
-                PostPage();
 
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 
     private void PostPage() {

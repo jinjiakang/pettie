@@ -44,6 +44,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.+'
     compile 'com.roger.catloadinglibrary:catloadinglibrary:1.0.1'
     compile 'com.facebook.android:facebook-login:[4,5)'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 
 
 }

@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="4dp"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,41 +25,53 @@
             <RelativeLayout
                  android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/img_User"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="left"
-                    android:layout_margin="5dp"
-                    android:src="@drawable/ic_friends" />
-            </RelativeLayout>
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/img_User"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_friends"
+                    android:layout_gravity="left"
+                    android:layout_margin="4dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="#ffffff">
+
+
+                </de.hdodenhof.circleimageview.CircleImageView>
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/text_UserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_marginTop="10dp"
                 android:gravity="left"
                  />
 
-            <TextView
-                android:id="@+id/text_Class"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:layout_weight="5"
-                android:gravity="right"
-                android:paddingRight="10dp"
-                 />
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/cardview_dark_background"
+            android:layout_height="1px"></RelativeLayout>
 
         <ImageView
             android:id="@+id/img_Info"
             android:layout_width="match_parent"
-            android:layout_height="255dp"
+            android:layout_height="240dp"
+
             android:text="載入中.."/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@color/cardview_dark_background"
+            android:layout_height="1px"></RelativeLayout>
 
         <TextView
             android:id="@+id/text_Info"
@@ -66,34 +79,45 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:gravity="center"
+            android:textStyle="bold"
             android:text="等待..."
-
             android:maxLines="1"
             android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/text_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:maxLines="5"
+            android:text="等待..."
+            android:textSize="16sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
+                android:layout_height="30dp"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/comment_Info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="查看留言"
+                    android:background="@color/colorpurple"
                     android:textSize="15sp" />
 
                 <Button
                     android:id="@+id/comment_Push"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:background="@color/colorpink"
                     android:text="留言"
                     android:textSize="15sp" />
 

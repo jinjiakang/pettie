@@ -35,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
         // 設定gridview
         List<Map<String, Object>> items = new ArrayList<>();
         for (int i = 0; i < image.length; i++) {
