@@ -157,9 +157,7 @@ public class AdoptionActivity extends AppCompatActivity {
 //
 //                    }
 
-                    if(adoption.getShelter_name().equals("臺北市動物之家")){
-                        continue;
-                    }else {
+
                         HashMap<String, String> map = new HashMap<>();
                         map.put("AnimalPlace", adoption.getAnimal_place());
                         map.put("AnimalImg", adoption.getAlbum_file());
@@ -257,7 +255,7 @@ public class AdoptionActivity extends AppCompatActivity {
 
                         mAndroidMapList.add(map);
 
-                    }
+
 
 
 
