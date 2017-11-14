@@ -92,9 +92,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for (Adoption ado : adoptions){
 
                     String location = ado.getShelter_address();
+                    String name = ado.getShelter_name();
 
                     try {
-                        goLo(location);
+                        goLo(location,name);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -118,7 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 }
 
-    private void goLo(String location) throws IOException {
+    private void goLo( String location,String s) throws IOException {
         Geocoder gc = new Geocoder(this);
         List<Address> list = gc.getFromLocationName(location, 1);
         Log.d("location_eric_list", location+" "+ list );
@@ -133,7 +134,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(lat, lng))
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                    .title(location));
+                    .snippet(location)
+                    .title(s));
         }
     }
 

@@ -232,6 +232,9 @@ public class ForumActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+                super.onBackPressed();
+                Intent intent = new Intent(ForumActivity.this,MainActivity.class);
+                startActivity(intent);
         }
     }
 

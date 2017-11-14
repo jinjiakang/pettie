@@ -100,9 +100,15 @@ public class AddActivity extends AppCompatActivity {
 
 
     public void onUpload(View v) {
-
-        if (chosenFile == null) {
-            Toast.makeText(AddActivity.this, "Choose a file before upload.", Toast.LENGTH_SHORT)
+        if(TextUtils.isEmpty(mEditPostName.getText().toString())) {
+            mEditPostName.setError("請輸入標題");
+            return;
+        }else if (mEditPostContent == null) {
+            Toast.makeText(AddActivity.this, "請輸入內容...", Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }else if (chosenFile == null) {
+            Toast.makeText(AddActivity.this, "請選擇圖片...", Toast.LENGTH_SHORT)
                     .show();
             return;
         }
@@ -245,18 +251,8 @@ public class AddActivity extends AppCompatActivity {
 
 
     private void PostPage() {
-        if(TextUtils.isEmpty(mEditPostName.getText().toString())) {
-            mEditPostName.setError("請輸入標題");
-            return;
-        }else if( mPhotoView.getDrawable() == null){
-            Toast.makeText(AddActivity.this, "請選擇圖片", Toast.LENGTH_SHORT)
-                    .show();
-            return;
-        }else if (imgUML == null){
-            Toast.makeText(AddActivity.this, "確認相片 ?", Toast.LENGTH_SHORT)
-                    .show();
-            return;
-        }
+        // 檢查
+
         final OkHttpClient client = new OkHttpClient();
         final RequestBody formBody = new FormBody.Builder()
                 .add("PostTitle",  mEditPostName.getText().toString())

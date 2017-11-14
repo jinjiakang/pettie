@@ -8,10 +8,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,16 +80,18 @@ public class MypostActivity extends AppCompatActivity {
 
 
             private TextView p_content_Del;
-            private  TextView text_Info_p_content;
+            private EditText text_Info_p_content;
             public ImageView img_Info_p;
-            public TextView text_Info_p;
+            public EditText text_Info_p;
+            private TextView p_content_edit;
 
             public ViewHolder(View v) {
                 super(v);
-                text_Info_p = (TextView) v.findViewById(R.id.text_Info_p);
+                text_Info_p = (EditText) v.findViewById(R.id.text_Info_p);
                 img_Info_p = (ImageView) v.findViewById(R.id.img_Info_p);
-                text_Info_p_content = (TextView) v.findViewById(R.id.text_Info_p_content);
+                text_Info_p_content = (EditText) v.findViewById(R.id.text_Info_p_content);
                 p_content_Del=(TextView)v.findViewById(R.id.p_content_Del);
+                p_content_edit=(TextView)v.findViewById(R.id.p_content_edit);
             }
         }
 
@@ -108,13 +112,34 @@ public class MypostActivity extends AppCompatActivity {
 
         // RecycleView 設置畫面上的內容
         @Override
-        public void onBindViewHolder(MypostActivity.MyAdapter.ViewHolder holder, final int position) {
+        public void onBindViewHolder(final MypostActivity.MyAdapter.ViewHolder holder, final int position) {
             final PostGson postGson = data[position];
             holder.text_Info_p.setText(postGson.getPostTitle());
             holder.text_Info_p_content.setText(postGson.getPostContent());
             Glide.with(holder.img_Info_p.getContext()).load("http://imgur.com/"+postGson.getImg_seq()+".jpg").into(holder.img_Info_p);
 
+            holder.p_content_edit.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+
+                    final String title = holder.text_Info_p.getText().toString();
+                    final String text = holder.text_Info_p_content.getText().toString();
+
+                    if(TextUtils.isEmpty(title)) {
+                        holder.text_Info_p.setError("標題沒有文字");
+                        return;
+                    }else if (TextUtils.isEmpty(text)){
+                        holder.text_Info_p_content.setError("內容沒有文字");
+                        return;
+                    }
+
+                    editContent(text , postGson.getPostNo(), title);
+                }
+            });
+
             holder.p_content_Del.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
                     delContent(postGson.getPostNo(),position);
@@ -170,7 +195,57 @@ public class MypostActivity extends AppCompatActivity {
                 });
                 dialog.show();
         }
+        private void editContent(final String text, final String No, final String title) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(context);
 
+            dialog.setTitle("確定修改?");
+            // 承接傳過來的字串，顯示在對話框之中
+
+            // 編輯確認
+            dialog.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                        public void onClick( DialogInterface dialoginterface, int i) {
+
+                            final OkHttpClient client = new OkHttpClient();
+                            final RequestBody formBody = new FormBody.Builder()
+                                    .add("UserAccount", AccessToken.getCurrentAccessToken().getUserId())
+                                    .add("PostNo",No)
+                                    .add("PostTitle",title)
+                                    .add("PostContent",text)
+                                    .build();
+                            Log.d("PostNo",No+""+AccessToken.getCurrentAccessToken().getUserId());
+                            final Request request = new Request.Builder()
+                                    .url("http://140.131.114.167/post_upd.php")
+                                    .post(formBody)
+                                    .build();
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    okhttp3.Response response = null;
+                                    try {
+                                        response = client.newCall(request).execute();
+                                        if (response.isSuccessful()) {
+                                            Log.i("DelPost","DELPOST輸出: " + response.body().string());
+                                        } else {
+                                            throw new IOException("Unexpected code " + response);
+                                        }
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).start();
+                            Intent intent = new Intent(MypostActivity.this, MypostActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+            );
+            dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialoginterface, int i) {
+                }
+
+            });
+            dialog.show();
+
+        }
         // 文章長度
         @Override
         public int getItemCount() {
@@ -178,5 +253,12 @@ public class MypostActivity extends AppCompatActivity {
         }
 
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(MypostActivity.this,LoginActivity.class);
+        startActivity(intent);
+    }
+
 
 }

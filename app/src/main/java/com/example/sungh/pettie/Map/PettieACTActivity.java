@@ -290,5 +290,11 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(PettieACTActivity.this,MainActivity.class);
+        startActivity(intent);
+    }
 
 }
