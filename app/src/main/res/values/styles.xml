@@ -9,8 +9,8 @@
 
     <style name="Widget.AppTheme.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
         <!-- action bar background - without android prefix -->
+
         <item name="background">@color/colorPrimaryDark</item>
-        <!-- action bar elevation - without android prefix -->
         <item name="elevation">4dp</item>
     </style>
 

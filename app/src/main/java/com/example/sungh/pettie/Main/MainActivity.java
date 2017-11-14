@@ -23,12 +23,12 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private int[] image = {
-            R.drawable.totoro, R.drawable.totoro, R.drawable.totoro,
-            R.drawable.totoro
+            R.drawable.fourm, R.drawable.adoption, R.drawable.fourm,
+
     };
-    private String[] imgText = {
-            "論壇", "領養資訊", "寵物地圖", "其它"
-    };
+//    private String[] imgText = {
+//            "論壇", "領養資訊", "寵物地圖"
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < image.length; i++) {
             Map<String, Object> item = new HashMap<>();
             item.put("image", image[i]);
-            item.put("text", imgText[i]);
+//            item.put("text", imgText[i]);
             items.add(item);
         }
         SimpleAdapter adapter = new SimpleAdapter(this,
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 new int[]{R.id.image, R.id.text});
 
         GridView gridView = (GridView)findViewById(R.id.gridview);
-        gridView.setNumColumns(2);
+        gridView.setNumColumns(1);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
