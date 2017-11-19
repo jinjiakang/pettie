@@ -15,13 +15,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sungh.pettie.Fourm.ForumActivity;
-import com.example.sungh.pettie.Main.LoginActivity;
 import com.example.sungh.pettie.Main.MainActivity;
 import com.example.sungh.pettie.R;
 import com.facebook.AccessToken;
@@ -64,16 +64,19 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // 權限判斷
+                if (AccessToken.getCurrentAccessToken() == null) {
+                    Toast.makeText(PettieACTActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 Intent pettie_form_act_intent = new Intent();
                 pettie_form_act_intent.setClass(PettieACTActivity.this, PettieACTFormActivity.class);
                 startActivity(pettie_form_act_intent);
             }
         });
-
-
         new RunWrok().start();
-
-
     }
 
 
@@ -93,6 +96,7 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
         TextView DiaActLoc = (TextView) content.findViewById(R.id.DiaActLoc);
         TextView DiaActDate = (TextView) content.findViewById(R.id.DiaActDate);
         TextView DiaActCon = (TextView) content.findViewById(R.id.DiaActCon);
+        Button DialogButton = (Button) content.findViewById(R.id.list_act) ;
 
         dialog.setView(content);
         dialog.setTitle("活動內容");
@@ -101,23 +105,115 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
         DiaActDate.setText(mAndroidMapList.get(position).get("ActDate"));
         DiaActCon.setText(mAndroidMapList.get(position).get("ActContent"));
 
+        DialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 權限判斷
+                if (AccessToken.getCurrentAccessToken() == null) {
+                    Toast.makeText(PettieACTActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
+                Intent intent = new Intent();
+                intent.setClass(PettieACTActivity.this, PettieACTlist.class);
+                intent.putExtra("position",mAndroidMapList.get(position).get("ActNo"));
+                startActivity(intent);
+
+
+            }
+        });
+
+        dialog.setNeutralButton("取消參加", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                // 權限判斷
+                if (AccessToken.getCurrentAccessToken() == null) {
+                    Toast.makeText(PettieACTActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                final OkHttpClient client = new OkHttpClient();
+
+                final RequestBody formBody = new FormBody.Builder()
+                        .add("ActNo", mAndroidMapList.get(position).get("ActNo"))
+                        .add("UserAccount", AccessToken.getCurrentAccessToken().getUserId())
+                        .build();
+
+                final Request request = new Request.Builder()
+                        .url("http://140.131.114.167/join_del.php")
+                        .post(formBody)
+                        .build();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Response response = null;
+                        try {
+                            response = client.newCall(request).execute();
+                            if (response.isSuccessful()) {
+                                Log.i("testOKhttp","POST輸出: " + response.body().string());
+                            } else {
+                                throw new IOException("Unexpected code " + response);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            }
+        });
 
         // 承接傳過來的字串，顯示在對話框之中
-//        dialog.setMessage(mAndroidMapList.get(position).get("ActName"));
         // 設定 PositiveButton 也就是一般 確定 或 OK 的按鈕
-        dialog.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton("參加", new DialogInterface.OnClickListener() {
+
             public void onClick( DialogInterface dialoginterface, int i) {
                 // 當使用者按下確定鈕後所執行的動作
+                // 權限判斷
+                if (AccessToken.getCurrentAccessToken() == null) {
+                    Toast.makeText(PettieACTActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                final OkHttpClient client = new OkHttpClient();
+
+                final RequestBody formBody = new FormBody.Builder()
+                        .add("ActNo", mAndroidMapList.get(position).get("ActNo"))
+                        .add("UserAccount", AccessToken.getCurrentAccessToken().getUserId())
+                        .build();
+
+                final Request request = new Request.Builder()
+                        .url("http://140.131.114.167/join_ins.php")
+                        .post(formBody)
+                        .build();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Response response = null;
+                        try {
+                            response = client.newCall(request).execute();
+                            if (response.isSuccessful()) {
+                                Log.i("testOKhttp","POST輸出: " + response.body().string());
+                            } else {
+                                throw new IOException("Unexpected code " + response);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
             }
         } );
+
         dialog.setNegativeButton("刪除", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialoginterface, int i) {
                 // 當使用者按下刪除鈕後所執行的動作
                 openDeleteDialog("確定嗎?",mAndroidMapList.get(position).get("ActNo"), position);
 
             }
-
 
         });
         dialog.show();
@@ -129,9 +225,7 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
         // 權限判斷
         if (AccessToken.getCurrentAccessToken() == null) {
             Toast.makeText(PettieACTActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent();
-            intent.setClass(PettieACTActivity.this, LoginActivity.class);
-            startActivity(intent);
+            return;
         }
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -199,11 +293,7 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
             // 可以連看看人怎麼包的 Json
             String path_json = "http://140.131.114.167/act_qry.php";
             String result_json = null;
-
-            /* This program downloads a URL and print its contents as a string.*/
             OkHttpClient client = new OkHttpClient();
-
-            // get 方法 參考 http://square.github.io/okhttp/
             String run(String url) throws IOException {
                 Request request = new Request.Builder()
                         .url(url)
@@ -218,8 +308,6 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
                 public void run() {
                     Gson gson = new Gson();
                     MyJsonAry[] ACTacts = gson.fromJson(result_json, MyJsonAry[].class);
-//                    StringBuilder sb = new StringBuilder();
-
 
                     for (MyJsonAry act : ACTacts) {
 
@@ -234,7 +322,7 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
 
                         mAndroidMapList.add(map);
                         Log.d("maparry", map.toString());
-//                        sb.append("活動名稱:").append(act.getActName()).append("\n");
+
                     }
                     loadListView();
 
@@ -268,7 +356,7 @@ public class PettieACTActivity extends ForumActivity implements AdapterView.OnIt
         }
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.nav_fourm) {

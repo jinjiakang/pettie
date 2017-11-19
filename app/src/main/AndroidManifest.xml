@@ -39,7 +39,7 @@
         tools:replace="android:icon">
         <activity
             android:name=".Main.MainActivity"
-            android:label="首頁">
+            android:label="Pettie">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -115,6 +115,12 @@
         <activity
             android:name=".Main.MypostActivity"
             android:label="個人文章"></activity>
+        <activity
+            android:name=".Map.PettieACTlist"
+            android:label="參與名單"></activity>
+        <activity
+            android:name=".Main.MyactActivity"
+            android:label="個人活動"></activity>
     </application>
 
 </manifest>

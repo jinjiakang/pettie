@@ -1,4 +1,4 @@
-package com.example.sungh.pettie.Fourm;
+package com.example.sungh.pettie.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,10 +20,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by sungh on 2017/11/8.
+ * Created by sungh on 2017/11/16.
  */
 
-public class CommentActivity extends AppCompatActivity {
+public class PettieACTlist extends AppCompatActivity {
+
     OkHttpClient client = new OkHttpClient();
     private String position_no;
     public List<HashMap<String, String>> mAndroidMapList= new ArrayList<>();
@@ -37,12 +38,13 @@ public class CommentActivity extends AppCompatActivity {
         Intent intent = this.getIntent();
         position_no = intent.getStringExtra("position");
         Log.d("Intent_position",position_no);
+
         new RunWrok().start();
     }
 
     private class RunWrok extends Thread{
 
-        String path_json = "http://140.131.114.167/Comment_qry.php?PostNo="+position_no;
+        String path_json = "http://140.131.114.167/join_qry.php?ActNo="+position_no;
         String result_json = null;
 
         OkHttpClient client = new OkHttpClient();
@@ -64,17 +66,13 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Gson gson = new Gson();
-                CommentGson[] CommentGsons = gson.fromJson(result_json, CommentGson[].class);
-                for (CommentGson com : CommentGsons) {
+                JoinGson[] JoinGsons = gson.fromJson(result_json, JoinGson[].class);
+                for (JoinGson join : JoinGsons) {
 
                     HashMap<String, String> map = new HashMap<>();
-                    map.put("ComNo", com.getComNo());
-                    map.put("ComContent", com.getComContent());
-                    map.put("ComTime", com.getComTime());
-                    map.put("PostNo", com.getComNo());
-                    map.put("UserAccount",  com.getName());
+                    map.put("Name", join.getName());
                     mAndroidMapList.add(map);
-                    Log.d("maparry", map.toString());
+                    Log.d("Join", map.toString());
 
                 }
                 loadListView();
@@ -99,13 +97,26 @@ public class CommentActivity extends AppCompatActivity {
         // 放將Array 放進ListView 裡面
         private void loadListView() {
 
-            adapter = new SimpleAdapter(CommentActivity.this, mAndroidMapList, R.layout.comment_content,
-                    new String[]{"UserAccount", "ComContent", "ComTime"},
-                    new int[]{R.id.UserAccount, R.id.ComContent, R.id.ComTime});
+            adapter = new SimpleAdapter(PettieACTlist.this, mAndroidMapList, R.layout.list_actactivity,
+                    new String[]{ "Name",},
+                    new int[]{R.id.UserName});
 
             mListView.setAdapter(adapter);
 
         }
 
+    }
+
+    private class JoinGson {
+
+        private String Name;
+
+        public String getName() {
+            return Name;
+        }
+
+        public void setName(String name) {
+            Name = name;
+        }
     }
 }

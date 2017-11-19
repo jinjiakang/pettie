@@ -48,7 +48,6 @@ public class LoginActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         FacebookSdk.sdkInitialize(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -56,12 +55,13 @@ public class LoginActivity extends FragmentActivity {
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         mImgPhoto = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.mImgPhoto);
         mTextDescription = (TextView)findViewById(R.id.fb_name);
-
+        // 先判斷是否登入會員的手機，有的話直接撈資料
         if (accessToken.getCurrentAccessToken() != null) {
             Log.d("FACEBOOK", "Facebook getUserId: " + AccessToken.getCurrentAccessToken().getUserId());
             new RunWrok().start();
 
         }
+
         // log out 的動作
         AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -78,6 +78,7 @@ public class LoginActivity extends FragmentActivity {
         };
         accessTokenTracker.startTracking();
 
+
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -93,7 +94,6 @@ public class LoginActivity extends FragmentActivity {
                             public void onCompleted(JSONObject object, GraphResponse response) {
 
                                 //讀出姓名 ID FB個人頁面連結
-
                                 Log.d("FB_S","complete");
                                 Log.d("FB_S",object.optString("name"));
                                 Log.d("FB_S",object.optString("link"));
@@ -113,25 +113,23 @@ public class LoginActivity extends FragmentActivity {
                                     e.printStackTrace();
                                 }
                                 mTextDescription.setText(object.optString("name"));
+                                // 讀取個人資料給 postProfile 傳回主機
                                 postProfile(object.optString("id"),object.optString("name"),userPhoto.toString());
                             }
                         });
 
                 //包入你想要得到的資料 送出request
-
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,link");
                 request.setParameters(parameters);
                 request.executeAsync();
             }
 
-
             @Override
             public void onCancel() {
                 Log.d("FB_C","CANCEL");
                 mImgPhoto.clearFocus();
                 mTextDescription.setText("");
-
             }
 
             @Override
@@ -143,6 +141,7 @@ public class LoginActivity extends FragmentActivity {
 
     }
 
+    // 取回個人資料
     private void postProfile(String id, String name, String s) {
         final OkHttpClient client = new OkHttpClient();
         final RequestBody formBody = new FormBody.Builder()
@@ -213,12 +212,22 @@ public class LoginActivity extends FragmentActivity {
         // 權限判斷
         if (AccessToken.getCurrentAccessToken() == null) {
             Toast.makeText(LoginActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent();
-            intent.setClass(LoginActivity.this, LoginActivity.class);
-            startActivity(intent);
+            return;
         }
         Intent intent = new Intent();
         intent.setClass(LoginActivity.this, MypostActivity.class);
+        startActivity(intent);
+    }
+
+
+    public void myAct(View view){
+        // 權限判斷
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Toast.makeText(LoginActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Intent intent = new Intent();
+        intent.setClass(LoginActivity.this, MyactActivity.class);
         startActivity(intent);
     }
 

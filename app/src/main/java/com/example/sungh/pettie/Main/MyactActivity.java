@@ -1,13 +1,14 @@
-package com.example.sungh.pettie.Fourm;
+package com.example.sungh.pettie.Main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.example.sungh.pettie.Map.MyJsonAry;
 import com.example.sungh.pettie.R;
+import com.facebook.AccessToken;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -20,10 +21,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by sungh on 2017/11/8.
+ * Created by sungh on 2017/11/16.
  */
 
-public class CommentActivity extends AppCompatActivity {
+public class MyactActivity extends AppCompatActivity {
+
     OkHttpClient client = new OkHttpClient();
     private String position_no;
     public List<HashMap<String, String>> mAndroidMapList= new ArrayList<>();
@@ -34,15 +36,12 @@ public class CommentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comment_info);
         mListView = (ListView) findViewById(R.id.text_com);
-        Intent intent = this.getIntent();
-        position_no = intent.getStringExtra("position");
-        Log.d("Intent_position",position_no);
         new RunWrok().start();
     }
 
     private class RunWrok extends Thread{
 
-        String path_json = "http://140.131.114.167/Comment_qry.php?PostNo="+position_no;
+        String path_json = "http://140.131.114.167/act_person.php?UserAccount="+AccessToken.getCurrentAccessToken().getUserId();
         String result_json = null;
 
         OkHttpClient client = new OkHttpClient();
@@ -64,17 +63,16 @@ public class CommentActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Gson gson = new Gson();
-                CommentGson[] CommentGsons = gson.fromJson(result_json, CommentGson[].class);
-                for (CommentGson com : CommentGsons) {
+                MyJsonAry[] myJsonAries = gson.fromJson(result_json,MyJsonAry[].class);
+                for (MyJsonAry my : myJsonAries) {
 
                     HashMap<String, String> map = new HashMap<>();
-                    map.put("ComNo", com.getComNo());
-                    map.put("ComContent", com.getComContent());
-                    map.put("ComTime", com.getComTime());
-                    map.put("PostNo", com.getComNo());
-                    map.put("UserAccount",  com.getName());
+                    map.put("ActName", my.getActName());
+                    map.put("ActDate", my.getActDate());
+                    map.put("ActLocation", my.getActLocation());
+                    map.put("ActContent", my.getActContent());
                     mAndroidMapList.add(map);
-                    Log.d("maparry", map.toString());
+                    Log.d("actarry", map.toString());
 
                 }
                 loadListView();
@@ -99,13 +97,14 @@ public class CommentActivity extends AppCompatActivity {
         // 放將Array 放進ListView 裡面
         private void loadListView() {
 
-            adapter = new SimpleAdapter(CommentActivity.this, mAndroidMapList, R.layout.comment_content,
-                    new String[]{"UserAccount", "ComContent", "ComTime"},
-                    new int[]{R.id.UserAccount, R.id.ComContent, R.id.ComTime});
+            adapter = new SimpleAdapter(MyactActivity.this, mAndroidMapList, R.layout.activity_myact,
+                    new String[]{"ActName", "ActLocation", "ActDate", "ActContent"},
+                    new int[]{R.id.ActName, R.id.ActWhere, R.id.ActDate, R.id.ActContent});
 
             mListView.setAdapter(adapter);
 
         }
+
 
     }
 }

@@ -4,8 +4,6 @@ package com.example.sungh.pettie.Adoption;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -31,15 +28,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.roger.catloadinglibrary.CatLoadingView;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -353,7 +344,7 @@ public class AdoptionActivity extends AppCompatActivity {
             Glide
                 .with(context)
                 .load(MyDatas.get(position).get("AnimalImg"))
-                .error(R.drawable.totoro)
+                .error(R.drawable.nopic)
                 .into(holder.image);
             return row;
         }
@@ -397,7 +388,7 @@ public class AdoptionActivity extends AppCompatActivity {
         Glide
             .with(context)
             .load(mAndroidMapList.get(position).get("AnimalImg"))
-            .error(R.drawable.totoro)
+            .error(R.drawable.nopic)
             .into(imageView);
         animal_id_txv.setText("ID：" + mAndroidMapList.get(position).get("AnimalID"));
         animal_kind_txv.setText("種類：" + mAndroidMapList.get(position).get("AnimalKind"));

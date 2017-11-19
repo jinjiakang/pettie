@@ -105,4 +105,15 @@
         android:lines="5"
         />
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="4dp"
+        android:text="參與名單"
+        android:onClick="onList"
+        android:id="@+id/list_act"
+        />
 </LinearLayout>

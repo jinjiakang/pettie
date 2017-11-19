@@ -4,6 +4,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -37,6 +38,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private List<HashMap<String, String>> mAndroidMapList;
     private SimpleAdapter adapter;
+    private static final int REQUEST_FINE_LOCATION_PERMISSION = 102;
+    private static final int MY_LOCATION_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +49,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
         new RunWrok().start();
+
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                REQUEST_FINE_LOCATION_PERMISSION);
+
     }
 
-        class RunWrok extends Thread {
+    class RunWrok extends Thread {
         //設置寵物的位置和活動位置點
         String path_json1 = "http://data.coa.gov.tw/Service/OpenData/AnimalOpenData.aspx?$top=50";// 先抓50筆
-            String path_json2 ="http://140.131.114.167/act_qry.php";
+        String path_json2 = "http://140.131.114.167/act_qry.php";
         String result_json1 = null;
-            String result_json2 = null;
-            /* This program downloads a URL and print its contents as a string.*/
+        String result_json2 = null;
+        /* This program downloads a URL and print its contents as a string.*/
         OkHttpClient client = new OkHttpClient();
 
         // get 方法 參考 http://square.github.io/okhttp/
@@ -75,27 +80,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void run() {
                 Gson gson = new Gson();
                 MyJsonAry[] ACTacts = gson.fromJson(result_json2, MyJsonAry[].class);
-                Adoption[] adoptions = gson.fromJson(result_json1,Adoption[].class);
-                    // 插所有活動點
+                Adoption[] adoptions = gson.fromJson(result_json1, Adoption[].class);
+                // 插所有活動點
                 for (MyJsonAry act : ACTacts) {
 
                     double valueX = Double.parseDouble(act.getMapX());
                     double valueY = Double.parseDouble(act.getMapY());
                     mMap.addMarker(new MarkerOptions()
 
-                            .position(new LatLng(valueX,valueY))
-                            .title( act.getActLocation())
+                            .position(new LatLng(valueX, valueY))
+                            .title(act.getActLocation())
                             .snippet(act.getActName()));
 
                 }
 
-                for (Adoption ado : adoptions){
+                for (Adoption ado : adoptions) {
 
                     String location = ado.getShelter_address();
                     String name = ado.getShelter_name();
 
                     try {
-                        goLo(location,name);
+                        goLo(location, name);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -117,15 +122,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         }
-}
+    }
 
-    private void goLo( String location,String s) throws IOException {
+    private void goLo(String location, String s) throws IOException {
         Geocoder gc = new Geocoder(this);
         List<Address> list = gc.getFromLocationName(location, 1);
-        Log.d("location_eric_list", location+" "+ list );
-        if (list.isEmpty()){
+        Log.d("location_eric_list", location + " " + list);
+        if (list.isEmpty()) {
             return;
-        }else {
+        } else {
             Address address = list.get(0);
             double lat = address.getLatitude();
             double lng = address.getLongitude();
@@ -150,10 +155,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         } else {
             // Show rationale and request permission.
-        }
     }
-
-
+    }
 
 
     private void goToLocationZoom(double v, double v1, int i) {

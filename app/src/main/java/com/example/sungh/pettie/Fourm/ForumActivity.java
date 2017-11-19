@@ -34,7 +34,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.sungh.pettie.Add.AddActivity;
-import com.example.sungh.pettie.Main.LoginActivity;
 import com.example.sungh.pettie.Main.MainActivity;
 import com.example.sungh.pettie.Map.PettieACTActivity;
 import com.example.sungh.pettie.R;
@@ -67,6 +66,7 @@ public class ForumActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forum);
         mRecyclerView = (RecyclerView) findViewById(R.id.list_view);
@@ -74,7 +74,6 @@ public class ForumActivity extends AppCompatActivity
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        
         // 實作toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -83,6 +82,13 @@ public class ForumActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // 權限判斷
+                if (AccessToken.getCurrentAccessToken() == null) {
+                    Toast.makeText(ForumActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 Intent intent = new Intent();
                 intent.setClass(ForumActivity.this  ,AddActivity.class);
                 startActivity(intent);
@@ -96,8 +102,6 @@ public class ForumActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
         StringRequest request = new StringRequest(URL, new Response.Listener<String>() {
 
             @Override
@@ -107,6 +111,7 @@ public class ForumActivity extends AppCompatActivity
                 Gson gson = gsonBuilder.create();
                 PostGson[] postGsons = gson.fromJson(s,PostGson[].class);
                 mRecyclerView.setAdapter(new MyAdapter(ForumActivity.this,postGsons));
+
             }
         },
         new Response.ErrorListener() {
@@ -117,8 +122,6 @@ public class ForumActivity extends AppCompatActivity
         });
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
-
-
 
         // 判斷 fab 隱藏時機
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
@@ -210,8 +213,6 @@ public class ForumActivity extends AppCompatActivity
             Glide.with(holder.img_Info.getContext()).load("http://imgur.com/"+postGson.getImg_seq()+".jpg").into(holder.img_Info);
             Glide.with(holder.img_User.getContext()).load(postGson.getImg_user()).into(holder.img_User);
 
-
-
         }
         // 文章長度
         @Override
@@ -219,11 +220,7 @@ public class ForumActivity extends AppCompatActivity
             return data.length;
         }
 
-
-
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -237,7 +234,6 @@ public class ForumActivity extends AppCompatActivity
                 startActivity(intent);
         }
     }
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -265,7 +261,6 @@ public class ForumActivity extends AppCompatActivity
         return true;
     }
 
-
     private void openCommentDialog(String postContent) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -276,15 +271,12 @@ public class ForumActivity extends AppCompatActivity
         dialog.show();
     }
 
-
     private void openContentDialog(final int position, PostGson[] data) {
 
         // 權限判斷
         if (AccessToken.getCurrentAccessToken() == null) {
             Toast.makeText(ForumActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent();
-            intent.setClass(ForumActivity.this, LoginActivity.class);
-            startActivity(intent);
+            return;
         }
         final PostGson postGson = data[position];
 
@@ -293,12 +285,16 @@ public class ForumActivity extends AppCompatActivity
         intent.putExtra("position",postGson.getPostNo());
         startActivity(intent);
 
-
     }
 
-
-
     private void openResondDialog(final int position, final String postno) {
+
+        // 權限判斷
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Toast.makeText(ForumActivity.this, "請先登入...", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         View content =  inflater.inflate(R.layout.comment_push, null);
@@ -341,7 +337,5 @@ public class ForumActivity extends AppCompatActivity
         dialog.setView(content);
         dialog.show();
     }
-
-
 
 }

@@ -66,7 +66,6 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
             intent.setClass(PettieACTFormActivity.this, LoginActivity.class);
             startActivity(intent);
 
-
         }
         mButtonWhere = (Button) findViewById(R.id.button_where);
         mButtonActSet = (Button) findViewById(R.id.activity_set);
@@ -75,9 +74,7 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
         mPicActDate = (DatePicker) findViewById(R.id.activity_date);
         mPicActTime = (TimePicker) findViewById(R.id.activity_time);
         mEditActContent = (EditText) findViewById(R.id.activity_content);
-
         url = "http://140.131.114.167/act_ins.php";
-
         mButtonWhere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +82,6 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
             }
         }
         );
-
 
         mButtonActSet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +100,6 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
             }
         });
     }
-
 
     private void openOptionsDialog(String mWhere) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -126,7 +121,6 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
                     e.printStackTrace();
                 }
                 // btnAdd1 has been clicked
-
             }
 
         });
@@ -142,12 +136,8 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
                 fm.commit();
             }
         });
-
         dialog.show();
-
     }
-
-
 
     private void PostPage() {
 
@@ -158,10 +148,8 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
         int hour =  mPicActTime.getHour();
         int min = mPicActTime.getMinute();
         cdate = year + "/" + month + "/" + day + " " + hour +":"+ min +":"+00;
-
         String STlat = String.valueOf(lat);
         String STlng = String.valueOf(lng);
-
         Log.d("MAPXY: ",STlat+","+STlng);
         Log.d("insertDate",cdate);
         final RequestBody formBody = new FormBody.Builder()
@@ -195,7 +183,6 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
                 }
             }
         }).start();
-
 
     }
 
@@ -240,7 +227,6 @@ public class PettieACTFormActivity extends AppCompatActivity implements OnMapRea
                 .position(new LatLng(lat, lng))
                 .title(location));
 
-        // setMarker(locality, lat, lng);
 
     }
 }

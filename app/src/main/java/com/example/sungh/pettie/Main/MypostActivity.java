@@ -78,7 +78,6 @@ public class MypostActivity extends AppCompatActivity {
 
         public class ViewHolder extends RecyclerView.ViewHolder {
 
-
             private TextView p_content_Del;
             private EditText text_Info_p_content;
             public ImageView img_Info_p;
