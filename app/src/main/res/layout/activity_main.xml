@@ -26,10 +26,10 @@
         android:layout_marginStart="120dp"
         android:layout_marginTop="250dp"
 
-        android:background="#d2c49d"
+        android:background="#f2971e"
         android:onClick="goFourm"
         android:paddingLeft="10dp"
-        android:text="論壇"
+        android:text="論         壇"
         android:textSize="30dp" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:layout_alignStart="@+id/textView"
         android:layout_below="@+id/textView"
         android:layout_marginTop="32dp"
-        android:background="#82bfc7"
+        android:background="#f2971e"
         android:onClick="goAdopt"
         android:paddingLeft="10dp"
         android:text="領養資訊"
@@ -52,7 +52,7 @@
         android:layout_alignStart="@+id/textView2"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="30dp"
-        android:background="#ce8e8e"
+        android:background="#f2971e"
         android:onClick="goMap"
         android:paddingLeft="10dp"
         android:text="寵物地圖"

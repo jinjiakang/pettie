@@ -64,22 +64,25 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center|bottom"
                 android:onClick="goHome"
+                android:background="#e45757"
+                android:layout_margin="3dp"
                 android:text="回到首頁" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center|bottom"
                 android:onClick="myPost"
+                android:background="#e45757"
+                android:layout_margin="3dp"
                 android:text="個人文章" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center|bottom"
                 android:onClick="myAct"
+                android:layout_margin="3dp"
+                android:background="#e45757"
                 android:text="個人活動" />
 
         </LinearLayout>
